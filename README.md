@@ -1,6 +1,11 @@
-# create-svelte
+# Svelte Pokemon Pet Project
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Goals:
+
+1. Show my frontend architecture skills by creating a project using the framework I don't use
+2. Implement virtual scrolling, examine different approaches of creating it
+3. Explore accessibility features and their implementations
+4. Have fun
 
 ## Developing
 
