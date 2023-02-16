@@ -11,8 +11,8 @@ Pokemon list display using https://pokeapi.co/
 
 ## TODO List:
 
-- [ ] API layer
-- [ ] Item layout and design
+- [x] API layer (sort of)
+- [ ] Item layout and design - in Progress
 - [ ] Virtual Scrolling
 - [ ] Adaptive layout
 - [ ] Accessibility
@@ -24,7 +24,7 @@ Pokemon list display using https://pokeapi.co/
 yarn dev
 
 # or start the server and open the app in a new browser tab
-yarn dev -- --open
+yarn dev --open
 ```
 
 ## Building

@@ -1,4 +1,5 @@
 <script>
+    import PokemonCardList from "../components/PokemonCardList.svelte";
     import { pokemonApi } from "../services/api/pokemonApi";
 
     const { getList } = pokemonApi;
@@ -29,9 +30,7 @@
         {#await promise}
             ...Loading
         {:then list}
-            {#each list.results as pokemon}
-                <div>Name: {pokemon.name}</div>
-            {/each}
+            <PokemonCardList {list} />
         {:catch error}
             Error: {error}
         {/await}
