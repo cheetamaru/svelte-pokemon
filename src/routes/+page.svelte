@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import PokemonCardList from "../components/PokemonCardList.svelte";
     import { pokemonApi } from "../services/api/pokemonApi";
 

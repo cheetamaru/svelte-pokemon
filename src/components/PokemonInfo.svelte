@@ -1,10 +1,12 @@
 <script lang="ts">
     import type { Pokemon } from "pokenode-ts";
+    import { capitalize } from "../utils";
 
     export let pokemon: Pokemon
 
     $: name = pokemon.name
-    $: capitalizedName = name[0].toUpperCase() + name.slice(1)
+    $: capitalizedName = capitalize(name)
+
     $: spriteSrc = pokemon.sprites.front_default
 </script>
 

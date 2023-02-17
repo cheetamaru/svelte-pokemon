@@ -12,8 +12,8 @@ Pokemon list display using https://pokeapi.co/
 ## TODO List:
 
 - [x] API layer (sort of)
-- [ ] Item layout and design - in Progress
-- [ ] Virtual Scrolling
+- [ ] Item layout and design - on Stop
+- [ ] Virtual Scrolling - in Progress
 - [ ] Adaptive layout
 - [ ] Accessibility
 - [ ] Deployment

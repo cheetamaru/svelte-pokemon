@@ -1,9 +1,15 @@
 <script lang="ts">
+    import type { NamedAPIResourceList } from "pokenode-ts";
     import PokemonCard from "../components/PokemonCard.svelte";
-    export let list: import("pokenode-ts").NamedAPIResourceList
+
+    export let list: NamedAPIResourceList
+
+    $: total = list.count
 </script>
-<div class="pokemon-card-list-container">
-    <div class="pokemon-card-list">
+
+<div>Total: {total}</div>
+<div class="pokemon-card-list">
+    <div class="pokemon-card-list__main">
         {#each list.results as pokemon}
             <PokemonCard name="{pokemon?.name}" />
         {/each}
@@ -12,12 +18,12 @@
 
 
 <style>
-.pokemon-card-list-container {
+.pokemon-card-list {
     display: flex;
     justify-content: center;
 }
 
-.pokemon-card-list {
+.pokemon-card-list__main {
     display: flex;
     flex-wrap: wrap;
     align-items: center;

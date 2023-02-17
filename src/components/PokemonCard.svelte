@@ -1,6 +1,7 @@
 <script>
     import { pokemonApi } from "../services/api/pokemonApi";
     import PokemonInfo from "./PokemonInfo.svelte";
+
     export let name = ''
 
     const { getPokemonByName } = pokemonApi;
@@ -13,6 +14,8 @@
         ...pokemon loading
     {:then pokemon}
         <PokemonInfo {pokemon}/>
+    {:catch error}
+        Error: {error}
     {/await}
 </div>
 
