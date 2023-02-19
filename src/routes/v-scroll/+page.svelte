@@ -7,14 +7,34 @@
     const totalContentHeight = num * rowHeight
 
     const viewportHeight = 400;
-    const offsetY = 0 + rowHeight
 
+    let scrollTop = 0
+
+    const onScroll = (e) => {
+        return requestAnimationFrame(() => {
+            scrollTop = e.target.scrollTop
+        });
+    }
+
+    const renderAhread = 5
+
+    $: startNode = Math.max(0, Math.floor(scrollTop / rowHeight) - renderAhread);
+
+    let visibleNodeCount = Math.ceil(viewportHeight / rowHeight) + 2 * renderAhread;
+    visibleNodeCount = Math.min(num - (startNode || 0), visibleNodeCount);
+
+    $: offsetY = startNode * rowHeight
+
+    $: visibleChildren = Array(visibleNodeCount || 0).fill(null).map((_, index) => {
+        return data[index + startNode]
+    })
 </script>
 
-<div class="main" style="height: {viewportHeight}px">
+<div>Virtual Scrolling</div>
+<div class="main" style="height: {viewportHeight}px" on:scroll="{onScroll}">
     <div class="viewport" style="height: {totalContentHeight}px">
-        <div class="container" style="transform: translateY(${offsetY}px)">
-            {#each data as el}
+        <div class="container" style="transform: translateY({offsetY}px)">
+            {#each visibleChildren as el}
                 <div class="row">
                     {el}
                 </div>
@@ -41,6 +61,7 @@
 
     .row {
         display: block;
+        box-sizing: border-box;
         height: 40px;
         width: 100px;
         border: 1px solid blueviolet;
