@@ -10,9 +10,11 @@
 
     let scrollTop = 0
 
-    const onScroll = (e) => {
+    const onScroll = (e: Event) => {
         return requestAnimationFrame(() => {
-            scrollTop = e.target.scrollTop
+            if (e.target instanceof Element) {
+                scrollTop = e.target.scrollTop
+            }
         });
     }
 
