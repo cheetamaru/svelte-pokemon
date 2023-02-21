@@ -1,12 +1,13 @@
 <script lang="ts">
-    const num = 100
+    const elementCount = 100
+    const elementHeight = 30
+    const containerHeight = 400;
+    const renderAhreadElementCount = 5
+
+    const totalContentHeight = elementCount * elementHeight
+
     let index = 0
-    const data = Array(num).fill(0).map((el) => el + index++)
-
-    const rowHeight = 40
-    const totalContentHeight = num * rowHeight
-
-    const viewportHeight = 400;
+    const data = Array(elementCount).fill(0).map((el) => el + index++)
 
     let scrollTop = 0
 
@@ -18,26 +19,24 @@
         });
     }
 
-    const renderAhread = 5
+    $: firstRenderedElementIndex = Math.max(0, Math.floor(scrollTop / elementHeight) - renderAhreadElementCount);
 
-    $: startNode = Math.max(0, Math.floor(scrollTop / rowHeight) - renderAhread);
+    let visibleNodeCount = Math.ceil(containerHeight / elementHeight) + 2 * renderAhreadElementCount;
+    visibleNodeCount = Math.min(elementCount - (firstRenderedElementIndex || 0), visibleNodeCount);
 
-    let visibleNodeCount = Math.ceil(viewportHeight / rowHeight) + 2 * renderAhread;
-    visibleNodeCount = Math.min(num - (startNode || 0), visibleNodeCount);
+    $: offsetY = firstRenderedElementIndex * elementHeight
 
-    $: offsetY = startNode * rowHeight
-
-    $: visibleChildren = Array(visibleNodeCount || 0).fill(null).map((_, index) => {
-        return data[index + startNode]
+    $: visibleElements = Array(visibleNodeCount || 0).fill(null).map((_, index) => {
+        return data[index + firstRenderedElementIndex]
     })
 </script>
 
 <div>Virtual Scrolling</div>
-<div class="main" style="height: {viewportHeight}px" on:scroll="{onScroll}">
-    <div class="viewport" style="height: {totalContentHeight}px">
-        <div class="container" style="transform: translateY({offsetY}px)">
-            {#each visibleChildren as el}
-                <div class="row">
+<div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
+    <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
+        <div class="virtual-scroll___visible-part" style="transform: translateY({offsetY}px)">
+            {#each visibleElements as el}
+                <div class="virtual-scroll___element" style="height: {elementHeight}px">
                     {el}
                 </div>
             {/each}
@@ -46,25 +45,24 @@
 </div>
 
 <style>
-    .main {
+    .virtual-scroll__container {
         overflow: auto;
         background-color: blanchedalmond;
     }
 
-    .viewport {
+    .virtual-scroll__viewport {
         overflow: hidden;
         will-change: transform;
         position: relative;
     }
 
-    .container {
+    .virtual-scroll___visible-part {
         will-change: transform;
     }
 
-    .row {
+    .virtual-scroll___element {
         display: block;
         box-sizing: border-box;
-        height: 40px;
         width: 100px;
         border: 1px solid blueviolet;
     }
