@@ -4,11 +4,11 @@
     const containerHeight = 200;
     const renderAhreadElementRowCount = 5
 
-    const elementsPerRow = 4
+    const elementsPerRow = 3
 
-    const totalContentHeight = Math.ceil(elementCount * elementHeight / elementsPerRow)
+    const totalContentHeight = Math.ceil(elementCount / elementsPerRow) * elementHeight
 
-    let index = 0
+    let index = 1
     const data = Array(elementCount).fill(0).map((el) => el + index++)
 
     let scrollTop = 0
@@ -36,19 +36,13 @@
 </script>
 
 <div>Virtual Scrolling</div>
-<div>totalContentHeight: {totalContentHeight}</div>
-<div>visibleNodeCount: {visibleNodeCount}</div>
-<div>visibleElements: {visibleElements}</div>
-<div>lastInRowRenderedElementIndex: {lastInRowRenderedElementIndex}</div>
-<div>offsetY: {offsetY}</div>
-<div>scrollTop: {scrollTop}</div>
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
     <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
         <div class="virtual-scroll___visible-part" style="transform: translateY({offsetY}px)">
             {#each visibleElements as el}
                 <div
                     class="virtual-scroll___element"
-                    style="height: {elementHeight}px; width: {Math.floor(100 / elementsPerRow)}%">
+                    style="height: {elementHeight}px; width: {100 / elementsPerRow}%">
                     {el}
                 </div>
             {/each}
