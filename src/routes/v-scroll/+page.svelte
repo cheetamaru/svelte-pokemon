@@ -4,7 +4,7 @@
     const containerHeight = 200;
     const renderAhreadElementRowCount = 5
 
-    const elementsPerRow = 3
+    const elementsPerRow = 2
 
     const totalContentHeight = Math.ceil(elementCount / elementsPerRow) * elementHeight
 
@@ -12,11 +12,21 @@
     const data = Array(elementCount).fill(0).map((el) => el + index++)
 
     let scrollTop = 0
+    let maxScrollTop = scrollTop
+
+    const onNewElementAppear = () => {
+        console.log('add', Math.floor(maxScrollTop / elementHeight))
+    }
 
     const onScroll = (e: Event) => {
         return requestAnimationFrame(() => {
             if (e.target instanceof Element) {
                 scrollTop = e.target.scrollTop
+
+                if (e.target.scrollTop > maxScrollTop) {
+                    maxScrollTop = e.target.scrollTop
+                    onNewElementAppear()
+                }
             }
         });
     }
@@ -30,19 +40,26 @@
 
     $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
 
-    $: visibleElements = Array(visibleNodeCount || 0).fill(null).map((_, index) => {
-        return data[index + lastInRowRenderedElementIndex]
-    })
+    $: visibleElements = Array(visibleNodeCount || 0)
+        .fill(null)
+        .map((_, index) => {
+            return data[index + lastInRowRenderedElementIndex]
+        })
 </script>
 
 <div>Virtual Scrolling</div>
+<div>maxScrollTop: {maxScrollTop}</div>
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
     <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
         <div class="virtual-scroll___visible-part" style="transform: translateY({offsetY}px)">
             {#each visibleElements as el}
                 <div
                     class="virtual-scroll___element"
-                    style="height: {elementHeight}px; width: {100 / elementsPerRow}%">
+                    style="
+                        height: {elementHeight}px;
+                        width: {100 / elementsPerRow}%
+                    "
+                >
                     {el}
                 </div>
             {/each}
