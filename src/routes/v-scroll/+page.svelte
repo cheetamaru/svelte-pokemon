@@ -4,18 +4,28 @@
     const containerHeight = 200;
     const renderAhreadElementRowCount = 5
 
-    const elementsPerRow = 2
+    const elementsPerRow = 10
 
     const totalContentHeight = Math.ceil(elementCount / elementsPerRow) * elementHeight
 
+    const firstBatch = Math.ceil(Math.ceil(containerHeight / elementHeight) * elementsPerRow) + 2 * renderAhreadElementRowCount 
+
     let index = 1
-    const data = Array(elementCount).fill(0).map((el) => el + index++)
+    let data = Array(firstBatch).fill(0).map((el) => el + index++)
 
     let scrollTop = 0
     let maxScrollTop = scrollTop
 
+    let needToRenderRows = 0
+
     const onNewElementAppear = () => {
-        console.log('add', Math.floor(maxScrollTop / elementHeight))
+        const newVal = Math.ceil((maxScrollTop / elementHeight) / renderAhreadElementRowCount)
+
+        if (newVal > needToRenderRows) {
+            needToRenderRows = newVal
+
+            data = [...data, ...Array(elementsPerRow * renderAhreadElementRowCount).fill(0).map(el => el + index++)]
+        }
     }
 
     const onScroll = (e: Event) => {
@@ -48,6 +58,8 @@
 </script>
 
 <div>Virtual Scrolling</div>
+<div>visibleNodeCount: {visibleNodeCount}</div>
+<div>data: {data.length}</div>
 <div>maxScrollTop: {maxScrollTop}</div>
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
     <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
