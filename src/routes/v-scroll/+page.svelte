@@ -4,7 +4,7 @@
     const containerHeight = 200;
     const renderAhreadElementRowCount = 5
 
-    const elementsPerRow = 10
+    const elementsPerRow = 3
 
     const totalContentHeight = Math.ceil(elementCount / elementsPerRow) * elementHeight
 
@@ -18,13 +18,25 @@
 
     let needToRenderRows = 0
 
+    const computeDataToAdd = () => {
+        let dataToAdd  = Array(elementsPerRow * renderAhreadElementRowCount).fill(0).map(el => el + index++)
+
+        if (data.length + dataToAdd.length > elementCount) {
+            dataToAdd = dataToAdd.slice(0, elementCount - data.length)
+        }
+
+        return dataToAdd
+    }
+
     const onNewElementAppear = () => {
         const newVal = Math.ceil((maxScrollTop / elementHeight) / renderAhreadElementRowCount)
 
         if (newVal > needToRenderRows) {
             needToRenderRows = newVal
 
-            data = [...data, ...Array(elementsPerRow * renderAhreadElementRowCount).fill(0).map(el => el + index++)]
+            const dataToAdd = computeDataToAdd()
+
+            data = [...data, ...dataToAdd]
         }
     }
 
@@ -45,7 +57,7 @@
 
     $: visibleNodeCount = Math.min(
         elementCount - (lastInRowRenderedElementIndex || 0),
-        Math.ceil(Math.ceil(containerHeight / elementHeight) * elementsPerRow) + 2 * renderAhreadElementRowCount
+        Math.ceil(Math.ceil(containerHeight / elementHeight) * elementsPerRow) + elementsPerRow * renderAhreadElementRowCount
     );
 
     $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
