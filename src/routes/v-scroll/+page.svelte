@@ -2,9 +2,9 @@
     const elementCount = 100
     const elementHeight = 30
     const containerHeight = 200;
-    const renderAhreadElementRowCount = 5
+    const renderAhreadElementRowCount = 2
 
-    const elementsPerRow = 3
+    const elementsPerRow = 4
 
     const totalContentHeight = Math.ceil(elementCount / elementsPerRow) * elementHeight
 
@@ -40,15 +40,19 @@
         }
     }
 
+    const handleNewElementAppear = (targetScrollTop: Element["scrollTop"]) => {
+        if (targetScrollTop > maxScrollTop) {
+            maxScrollTop = targetScrollTop
+            onNewElementAppear()
+        }
+    }
+
     const onScroll = (e: Event) => {
         return requestAnimationFrame(() => {
             if (e.target instanceof Element) {
                 scrollTop = e.target.scrollTop
 
-                if (e.target.scrollTop > maxScrollTop) {
-                    maxScrollTop = e.target.scrollTop
-                    onNewElementAppear()
-                }
+                handleNewElementAppear(e.target.scrollTop)
             }
         });
     }
