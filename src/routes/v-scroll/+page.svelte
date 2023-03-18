@@ -1,12 +1,16 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
+
+    const dispatch = createEventDispatcher();
+
     const elementCount = 100
     const elementHeight = 30
     const containerHeight = 200;
     const renderAhreadElementRowCount = 2
 
-    const elementsPerRow = 4
+    let elementsPerRow = 2
 
-    const totalContentHeight = Math.ceil(elementCount / elementsPerRow) * elementHeight
+    $: totalContentHeight = Math.ceil(elementCount / elementsPerRow) * elementHeight
 
     const firstBatch = Math.ceil(Math.ceil(containerHeight / elementHeight) * elementsPerRow) + 2 * renderAhreadElementRowCount 
 
@@ -19,7 +23,7 @@
     let needToRenderRows = 0
 
     const computeDataToAdd = () => {
-        let dataToAdd  = Array(elementsPerRow * renderAhreadElementRowCount).fill(0).map(el => el + index++)
+        let dataToAdd = Array(elementsPerRow * renderAhreadElementRowCount).fill(0).map(el => el + index++)
 
         if (data.length + dataToAdd.length > elementCount) {
             dataToAdd = dataToAdd.slice(0, elementCount - data.length)
@@ -28,15 +32,20 @@
         return dataToAdd
     }
 
+    const updateData = () => {
+        const dataToAdd = computeDataToAdd()
+
+        data = [...data, ...dataToAdd]
+    }
+
     const onNewElementAppear = () => {
         const newVal = Math.ceil((maxScrollTop / elementHeight) / renderAhreadElementRowCount)
 
         if (newVal > needToRenderRows) {
             needToRenderRows = newVal
+            dispatch('endReached')
 
-            const dataToAdd = computeDataToAdd()
-
-            data = [...data, ...dataToAdd]
+            updateData()
         }
     }
 
@@ -74,9 +83,7 @@
 </script>
 
 <div>Virtual Scrolling</div>
-<div>visibleNodeCount: {visibleNodeCount}</div>
-<div>data: {data.length}</div>
-<div>maxScrollTop: {maxScrollTop}</div>
+<div>elementsPerRow: <input bind:value={elementsPerRow} on:input={updateData} /></div>
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
     <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
         <div class="virtual-scroll___visible-part" style="transform: translateY({offsetY}px)">
