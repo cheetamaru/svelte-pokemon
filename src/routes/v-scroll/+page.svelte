@@ -22,14 +22,34 @@
 
     let needToRenderRows = 0
 
-    const computeDataToAdd = () => {
-        let dataToAdd = Array(elementsPerRow * renderAhreadElementRowCount).fill(0).map(el => el + index++)
+    $: lastInRowRenderedElementIndex = Math.max(0, Math.floor(scrollTop / elementHeight) - Math.ceil(renderAhreadElementRowCount / elementsPerRow)) * elementsPerRow;
 
-        if (data.length + dataToAdd.length > elementCount) {
-            dataToAdd = dataToAdd.slice(0, elementCount - data.length)
+    $: visibleNodeCount = Math.min(
+        elementCount - (lastInRowRenderedElementIndex || 0),
+        Math.ceil(Math.ceil(containerHeight / elementHeight) * elementsPerRow) + elementsPerRow * (renderAhreadElementRowCount + 1)
+    );
+
+    $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
+
+    $: visibleElements = Array(visibleNodeCount || 0)
+        .fill(null)
+        .map((_, index) => {
+            return data[index + lastInRowRenderedElementIndex]
+        })
+
+    const computeDataToAdd = () => {
+        let elementsToAddCount = elementsPerRow * renderAhreadElementRowCount
+
+        if (data.length + elementsToAddCount < visibleNodeCount) {
+            elementsToAddCount += visibleNodeCount
         }
 
-        return dataToAdd
+        if (data.length + elementsToAddCount > elementCount) {
+            const diff = elementCount - data.length
+            elementsToAddCount = diff > 0 ? diff : 0
+        }
+
+        return Array(elementsToAddCount).fill(0).map(el => el + index++)
     }
 
     const updateData = () => {
@@ -65,24 +85,10 @@
             }
         });
     }
-
-    $: lastInRowRenderedElementIndex = Math.max(0, Math.floor(scrollTop / elementHeight) - Math.ceil(renderAhreadElementRowCount / elementsPerRow)) * elementsPerRow;
-
-    $: visibleNodeCount = Math.min(
-        elementCount - (lastInRowRenderedElementIndex || 0),
-        Math.ceil(Math.ceil(containerHeight / elementHeight) * elementsPerRow) + elementsPerRow * renderAhreadElementRowCount
-    );
-
-    $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
-
-    $: visibleElements = Array(visibleNodeCount || 0)
-        .fill(null)
-        .map((_, index) => {
-            return data[index + lastInRowRenderedElementIndex]
-        })
 </script>
 
 <div>Virtual Scrolling</div>
+<div>data.length: {data.length}</div>
 <div>elementsPerRow: <input bind:value={elementsPerRow} on:input={updateData} /></div>
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
     <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
