@@ -36,9 +36,11 @@
         .map((_, index) => {
             return data[index + lastInRowRenderedElementIndex]
         })
+    
+    let lastNewRows = 0
 
-    const computeDataToAdd = () => {
-        let elementsToAddCount = elementsPerRow * renderAhreadElementRowCount
+    const computeDataToAdd = (newRows: number) => {
+        let elementsToAddCount = (newRows - lastNewRows) * elementsPerRow * renderAhreadElementRowCount
 
         if (data.length + elementsToAddCount < visibleNodeCount) {
             elementsToAddCount += visibleNodeCount
@@ -49,23 +51,25 @@
             elementsToAddCount = diff > 0 ? diff : 0
         }
 
+        lastNewRows = newRows
+
         return Array(elementsToAddCount).fill(0).map(el => el + index++)
     }
 
-    const updateData = () => {
-        const dataToAdd = computeDataToAdd()
+    const updateData = (newRows: number) => {
+        const dataToAdd = computeDataToAdd(newRows)
 
         data = [...data, ...dataToAdd]
     }
 
     const onNewElementAppear = () => {
-        const newVal = Math.ceil((maxScrollTop / elementHeight) / renderAhreadElementRowCount)
+        const newRows = Math.ceil((maxScrollTop / elementHeight) / renderAhreadElementRowCount)
 
-        if (newVal > needToRenderRows) {
-            needToRenderRows = newVal
+        if (newRows > needToRenderRows) {
+            needToRenderRows = newRows
             dispatch('endReached')
 
-            updateData()
+            updateData(newRows)
         }
     }
 
