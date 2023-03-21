@@ -39,7 +39,7 @@
     
     let lastNewRows = 0
 
-    const computeDataToAdd = (newRows: number) => {
+    const computeDataToAdd = (newRows: number = 0) => {
         let elementsToAddCount = (newRows - lastNewRows) * elementsPerRow * renderAhreadElementRowCount
 
         if (data.length + elementsToAddCount < visibleNodeCount) {
@@ -60,6 +60,10 @@
         const dataToAdd = computeDataToAdd(newRows)
 
         data = [...data, ...dataToAdd]
+    }
+
+    const updateDataOnInput = () => {
+        updateData()
     }
 
     const onNewElementAppear = () => {
@@ -93,7 +97,7 @@
 
 <div>Virtual Scrolling</div>
 <div>data.length: {data.length}</div>
-<div>elementsPerRow: <input bind:value={elementsPerRow} on:input={updateData} /></div>
+<div>elementsPerRow: <input bind:value={elementsPerRow} on:input={updateDataOnInput} /></div>
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
     <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
         <div class="virtual-scroll___visible-part" style="transform: translateY({offsetY}px)">
