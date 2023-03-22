@@ -1,26 +1,25 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+    import { onMount } from 'svelte';
 
     const dispatch = createEventDispatcher();
 
-    const elementCount = 100
-    const elementHeight = 30
-    const containerHeight = 200;
-    const renderAhreadElementRowCount = 2
+    export let elementCount = 100
+    export let elementHeight = 30
+    export let containerHeight = 200;
+    export let renderAhreadElementRowCount = 2
 
-    let elementsPerRow = 2
+    export let elementsPerRow = 2
+
+    export let data: object[] = []
 
     $: totalContentHeight = Math.ceil(elementCount / elementsPerRow) * elementHeight
-
-    const firstBatch = Math.ceil(Math.ceil(containerHeight / elementHeight) * elementsPerRow) + 2 * renderAhreadElementRowCount 
-
-    let index = 1
-    let data = Array(firstBatch).fill(0).map((el) => el + index++)
 
     let scrollTop = 0
     let maxScrollTop = scrollTop
 
     let needToRenderRows = 0
+    let lastNewRows = 0
 
     $: lastInRowRenderedElementIndex = Math.max(0, Math.floor(scrollTop / elementHeight) - Math.ceil(renderAhreadElementRowCount / elementsPerRow)) * elementsPerRow;
 
@@ -36,8 +35,6 @@
         .map((_, index) => {
             return data[index + lastInRowRenderedElementIndex]
         })
-    
-    let lastNewRows = 0
 
     const computeDataToAdd = (newRows: number = 0) => {
         let elementsToAddCount = (newRows - lastNewRows) * elementsPerRow * renderAhreadElementRowCount
@@ -53,17 +50,11 @@
 
         lastNewRows = newRows
 
-        return Array(elementsToAddCount).fill(0).map(el => el + index++)
-    }
-
-    const updateData = (newRows: number) => {
-        const dataToAdd = computeDataToAdd(newRows)
-
-        data = [...data, ...dataToAdd]
+        return dispatch('endReached', elementsToAddCount) 
     }
 
     const updateDataOnInput = () => {
-        updateData(0)
+        computeDataToAdd(0)
     }
 
     const onNewElementAppear = () => {
@@ -71,9 +62,8 @@
 
         if (newRows > needToRenderRows) {
             needToRenderRows = newRows
-            dispatch('endReached', newRows - lastNewRows)
 
-            updateData(newRows)
+            computeDataToAdd(newRows)
         }
     }
 
@@ -93,6 +83,10 @@
             }
         });
     }
+
+    onMount(() => {
+        computeDataToAdd()
+    })
 </script>
 
 <div>Virtual Scrolling</div>
