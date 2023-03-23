@@ -14,5 +14,7 @@ const handleEndReached = (event: CustomEvent<number>) => {
 
 <div>
     <div>Component!</div>
-    <VirtualScroll {data} on:endReached={handleEndReached}/>
+    <VirtualScroll {data} on:endReached={handleEndReached} let:el>
+        {el}
+    </VirtualScroll>
 </div>

@@ -9,7 +9,7 @@
     }
 
     let offset = 0
-    let limit = 10
+    let limit = 50
 
     let promise = getPokemonList()
 
@@ -21,12 +21,6 @@
 <div>
     <h1>Svelte Pokemon Pet Project</h1>
     <main>
-        <div>
-            <p>List params:</p>
-            <input type="number" name="offset" bind:value={offset}>
-            <input type="number" name="limit" bind:value={limit}>
-            <button on:click={handleClick}>Search</button>
-        </div>
         {#await promise}
             ...Loading
         {:then list}

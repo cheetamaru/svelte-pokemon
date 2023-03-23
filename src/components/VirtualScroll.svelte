@@ -5,11 +5,11 @@
     const dispatch = createEventDispatcher();
 
     export let elementCount = 100
-    export let elementHeight = 30
-    export let containerHeight = 200;
+    export let elementHeight = 130
+    export let containerHeight = 500;
     export let renderAhreadElementRowCount = 2
 
-    export let elementsPerRow = 2
+    export let elementsPerRow = 6
 
     export let data: object[] = []
 
@@ -87,15 +87,13 @@
     onMount(() => {
         computeDataToAdd()
     })
-</script>
 
-<div>Virtual Scrolling</div>
-<div>data.length: {data.length}</div>
-<div>elementsPerRow: <input bind:value={elementsPerRow} on:input={updateDataOnInput} /></div>
+    // TODO: fix bug with each key
+</script>
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
     <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
         <div class="virtual-scroll___visible-part" style="transform: translateY({offsetY}px)">
-            {#each visibleElements as el}
+            {#each visibleElements as el (el)}
                 <div
                     class="virtual-scroll___element"
                     style="
@@ -103,7 +101,7 @@
                         width: {100 / elementsPerRow}%
                     "
                 >
-                    {el}
+                    <slot {el} />
                 </div>
             {/each}
         </div>
@@ -114,6 +112,7 @@
     .virtual-scroll__container {
         overflow: auto;
         background-color: blanchedalmond;
+        width: 100%;
     }
 
     .virtual-scroll__viewport {

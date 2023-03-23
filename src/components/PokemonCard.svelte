@@ -22,8 +22,6 @@
 <style>
     .pokemon-card {
         border: 1px solid black;
-        width: 300px;
-        height: 300px;
         display: flex;
         justify-content: center;
         align-items: center;
