@@ -33,7 +33,10 @@
     $: visibleElements = Array(visibleNodeCount || 0)
         .fill(null)
         .map((_, index) => {
-            return data[index + lastInRowRenderedElementIndex]
+            return {
+                el: data[index + lastInRowRenderedElementIndex],
+                index: index + lastInRowRenderedElementIndex,
+            }
         })
 
     const computeDataToAdd = (newRows: number = 0) => {
@@ -90,10 +93,11 @@
 
     // TODO: fix bug with each key
 </script>
+
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
     <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
         <div class="virtual-scroll___visible-part" style="transform: translateY({offsetY}px)">
-            {#each visibleElements as el (el)}
+            {#each visibleElements as {el, index} (index)}
                 <div
                     class="virtual-scroll___element"
                     style="
