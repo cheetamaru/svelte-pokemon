@@ -1,4 +1,5 @@
 <script lang="ts">
+    import throttle from "lodash.throttle"
     import type { NamedAPIResourceList, NamedAPIResource } from "pokenode-ts";
     import PokemonCard from "../components/PokemonCard.svelte";
     import VirtualScroll from "../components/VirtualScroll.svelte";
@@ -13,12 +14,28 @@
 
     let data: NamedAPIResource[] = [...list.results]
 
+    let elementPool = 0
+
+    const getWithElPool = async () => {
+        if (elementPool === 0) {
+            return
+        }
+
+        const newData = await getList(data.length, elementPool)
+
+        data = [...data, ...newData.results]
+
+        elementPool = 0
+    }
+
+    const throttled = throttle(getWithElPool, 1000)
+
     const handleEndReached = async (event: CustomEvent<number>) => {
         const newElsNeeded = event.detail
 
-        const newData = await getList(data.length, newElsNeeded)
+        elementPool += newElsNeeded
 
-        data = [...data, ...newData.results]
+        throttled()
     }
 </script>
 
