@@ -1,5 +1,5 @@
 <script lang="ts">
-    import throttle from "lodash.throttle"
+    import debounce from "lodash.debounce"
     import type { NamedAPIResourceList, NamedAPIResource } from "pokenode-ts";
     import PokemonCard from "../components/PokemonCard.svelte";
     import VirtualScroll from "../components/VirtualScroll.svelte";
@@ -28,14 +28,14 @@
         elementPool = 0
     }
 
-    const throttled = throttle(getWithElPool, 1000)
+    const debounced = debounce(getWithElPool, 300)
 
     const handleEndReached = async (event: CustomEvent<number>) => {
         const newElsNeeded = event.detail
 
         elementPool += newElsNeeded
 
-        throttled()
+        debounced()
     }
 </script>
 
@@ -43,8 +43,18 @@
 <div>data: {data.length}</div>
 <div class="pokemon-card-list">
     <div class="pokemon-card-list__main">
-        <VirtualScroll {data} bind:elementCount={total} on:endReached={handleEndReached} let:el>
-            <PokemonCard name="{el?.name}"/>
+        <VirtualScroll
+            {data}
+            elementsPerRow={1}
+            bind:elementCount={total}
+            on:endReached={handleEndReached}
+            let:el
+        >
+            {#if !el}
+                Pokemon is loading
+            {:else}
+                <PokemonCard name="{el?.name}"/>
+            {/if}
         </VirtualScroll>
     </div>
 </div>
