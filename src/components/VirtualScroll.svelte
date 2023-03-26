@@ -90,8 +90,6 @@
     onMount(() => {
         computeDataToAdd()
     })
-
-    // TODO: fix bug with each key
 </script>
 
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">

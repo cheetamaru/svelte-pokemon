@@ -37,15 +37,22 @@
 
         debounced()
     }
+
+    let elementsPerRow = 2
+
+    // TODO: fix bug when items not load on elementsPerRow change
 </script>
 
 <div>Total: {total}</div>
 <div>data: {data.length}</div>
+<div>
+    Elements per row: <input type="text" bind:value={elementsPerRow}>
+</div>
 <div class="pokemon-card-list">
     <div class="pokemon-card-list__main">
         <VirtualScroll
             {data}
-            elementsPerRow={1}
+            {elementsPerRow}
             bind:elementCount={total}
             on:endReached={handleEndReached}
             let:el
