@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
     import { onMount } from 'svelte';
+    import debounce from "lodash.debounce"
 
     const dispatch = createEventDispatcher();
 
     export let elementCount = 100
     export let elementHeight = 130
     export let containerHeight = 500;
-    export let renderAhreadElementRowCount = 2
+    export let renderAhreadElementRowCount = 5
 
     export let elementsPerRow = 6
 
@@ -17,9 +18,6 @@
 
     let scrollTop = 0
     let maxScrollTop = scrollTop
-
-    let needToRenderRows = 0
-    let lastNewRows = 0
 
     $: lastInRowRenderedElementIndex = Math.max(0, Math.floor(scrollTop / elementHeight) - Math.ceil(renderAhreadElementRowCount / elementsPerRow)) * elementsPerRow;
 
@@ -40,7 +38,7 @@
         })
 
     const computeDataToAdd = (newRows: number = 0) => {
-        let elementsToAddCount = (newRows - lastNewRows) * elementsPerRow * renderAhreadElementRowCount
+        let elementsToAddCount = newRows * elementsPerRow
 
         if (data.length + elementsToAddCount < visibleNodeCount) {
             elementsToAddCount += visibleNodeCount
@@ -51,22 +49,31 @@
             elementsToAddCount = diff > 0 ? diff : 0
         }
 
-        lastNewRows = newRows
-
         return dispatch('endReached', elementsToAddCount) 
     }
+
+    const debounced = debounce(computeDataToAdd, 100)
 
     const updateDataOnInput = () => {
         computeDataToAdd(0)
     }
 
+    let lastNeedToRenderCount = -1
+
     const onNewElementAppear = () => {
-        const newRows = Math.ceil((maxScrollTop / elementHeight) / renderAhreadElementRowCount)
+        const bufferHeight = elementHeight * renderAhreadElementRowCount
 
-        if (newRows > needToRenderRows) {
-            needToRenderRows = newRows
+        const supposeToRenderZoneHeight = maxScrollTop + containerHeight + bufferHeight
 
-            computeDataToAdd(newRows)
+        const needToRenderRowsCount = Math.ceil(supposeToRenderZoneHeight / elementHeight)
+        const renderedRowsCount = Math.floor(data.length / elementsPerRow)
+
+        if (needToRenderRowsCount > renderedRowsCount && needToRenderRowsCount != lastNeedToRenderCount) {
+            const diffInRows = needToRenderRowsCount - renderedRowsCount
+
+            lastNeedToRenderCount = needToRenderRowsCount
+
+            debounced(diffInRows)
         }
     }
 
@@ -85,6 +92,11 @@
                 handleNewElementAppear(e.target.scrollTop)
             }
         });
+    }
+
+    $: {
+        const a = [elementsPerRow]
+        updateDataOnInput()
     }
 
     onMount(() => {

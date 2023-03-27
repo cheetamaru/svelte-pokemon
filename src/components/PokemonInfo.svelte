@@ -11,7 +11,7 @@
 </script>
 
 <div class="pokemon-info">
-    <div class="pokemon-info__name">{capitalizedName}</div>
+    <div class="pokemon-info__name">{capitalizedName} ({pokemon.id})</div>
     <img src="{spriteSrc}" alt="{name} sprite"/>
 </div>
 

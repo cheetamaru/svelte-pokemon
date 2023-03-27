@@ -1,5 +1,4 @@
 <script lang="ts">
-    import debounce from "lodash.debounce"
     import type { NamedAPIResourceList, NamedAPIResource } from "pokenode-ts";
     import PokemonCard from "../components/PokemonCard.svelte";
     import VirtualScroll from "../components/VirtualScroll.svelte";
@@ -28,25 +27,24 @@
         elementPool = 0
     }
 
-    const debounced = debounce(getWithElPool, 300)
-
     const handleEndReached = async (event: CustomEvent<number>) => {
         const newElsNeeded = event.detail
 
         elementPool += newElsNeeded
 
-        debounced()
+        getWithElPool()
     }
 
-    let elementsPerRow = 2
+    let elementsPerRow = 1
 
-    // TODO: fix bug when items not load on elementsPerRow change
+    // TODO: fix bug when need to render rows does not work correctly
+    // on elementsPerRow change
 </script>
 
 <div>Total: {total}</div>
 <div>data: {data.length}</div>
 <div>
-    Elements per row: <input type="text" bind:value={elementsPerRow}>
+    Elements per row: <input type="number" min="1" max="30" bind:value={elementsPerRow}>
 </div>
 <div class="pokemon-card-list">
     <div class="pokemon-card-list__main">
