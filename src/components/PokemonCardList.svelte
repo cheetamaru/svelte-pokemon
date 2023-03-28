@@ -2,6 +2,7 @@
     import type { NamedAPIResourceList, NamedAPIResource } from "pokenode-ts";
     import PokemonCard from "../components/PokemonCard.svelte";
     import VirtualScroll from "../components/VirtualScroll.svelte";
+    import debounce from "lodash.debounce"
 
     import { pokemonApi } from "../services/api/pokemonApi";
 
@@ -22,20 +23,24 @@
 
         const newData = await getList(data.length, elementPool)
 
-        data = [...data, ...newData.results]
-
         elementPool = 0
+
+        data = [...data, ...newData.results]
     }
 
-    const handleEndReached = async (event: CustomEvent<number>) => {
+    const debounced = debounce(getWithElPool, 100)
+
+    const handleEndReached = (event: CustomEvent<number>) => {
         const newElsNeeded = event.detail
 
         elementPool += newElsNeeded
 
-        getWithElPool()
+        debounced()
     }
 
-    let elementsPerRow = 1
+    const debouncedHandleEnd = debounce(handleEndReached, 100)
+
+    let elementsPerRow = 4
 
     // TODO: fix bug when need to render rows does not work correctly
     // on elementsPerRow change
@@ -52,7 +57,7 @@
             {data}
             {elementsPerRow}
             bind:elementCount={total}
-            on:endReached={handleEndReached}
+            on:endReached={debouncedHandleEnd}
             let:el
         >
             {#if !el}

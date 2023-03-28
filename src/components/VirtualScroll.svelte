@@ -8,7 +8,7 @@
     export let elementCount = 100
     export let elementHeight = 130
     export let containerHeight = 500;
-    export let renderAhreadElementRowCount = 5
+    export let renderAhreadElementRowCount = 2
 
     export let elementsPerRow = 6
 
@@ -52,7 +52,7 @@
         return dispatch('endReached', elementsToAddCount) 
     }
 
-    const debounced = debounce(computeDataToAdd, 100)
+    const debounced = debounce(computeDataToAdd, 300)
 
     const updateDataOnInput = () => {
         computeDataToAdd(0)
@@ -94,6 +94,8 @@
         });
     }
 
+    const debouncedOnScroll = debounce(onScroll, 0)
+
     $: {
         const a = [elementsPerRow]
         updateDataOnInput()
@@ -104,7 +106,7 @@
     })
 </script>
 
-<div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
+<div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{debouncedOnScroll}">
     <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
         <div class="virtual-scroll___visible-part" style="transform: translateY({offsetY}px)">
             {#each visibleElements as {el, index} (index)}

@@ -9,7 +9,7 @@
     }
 
     let offset = 0
-    let limit = 15
+    let limit = 30
 
     let promise = getPokemonList()
 
