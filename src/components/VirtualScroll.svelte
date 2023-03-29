@@ -52,8 +52,6 @@
         return dispatch('endReached', elementsToAddCount) 
     }
 
-    const debounced = debounce(computeDataToAdd, 300)
-
     const updateDataOnInput = () => {
         computeDataToAdd(0)
     }
@@ -73,13 +71,16 @@
 
             lastNeedToRenderCount = needToRenderRowsCount
 
-            debounced(diffInRows)
+            computeDataToAdd(diffInRows)
         }
     }
 
     const handleNewElementAppear = (targetScrollTop: Element["scrollTop"]) => {
-        if (targetScrollTop > maxScrollTop) {
+        const isNewElementAppeared = Math.floor((targetScrollTop - maxScrollTop) / elementHeight) > 0
+
+        if (targetScrollTop > maxScrollTop && isNewElementAppeared) {
             maxScrollTop = targetScrollTop
+
             onNewElementAppear()
         }
     }
@@ -94,8 +95,6 @@
         });
     }
 
-    const debouncedOnScroll = debounce(onScroll, 0)
-
     $: {
         const a = [elementsPerRow]
         updateDataOnInput()
@@ -106,7 +105,7 @@
     })
 </script>
 
-<div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{debouncedOnScroll}">
+<div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
     <div class="virtual-scroll__viewport" style="height: {totalContentHeight}px">
         <div class="virtual-scroll___visible-part" style="transform: translateY({offsetY}px)">
             {#each visibleElements as {el, index} (index)}

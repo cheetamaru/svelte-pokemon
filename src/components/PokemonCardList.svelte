@@ -21,21 +21,21 @@
             return
         }
 
-        const newData = await getList(data.length, elementPool)
+        const newData = getList(data.length, elementPool)
 
         elementPool = 0
 
-        data = [...data, ...newData.results]
+        data = [...data, ...(await newData).results]
     }
 
-    const debounced = debounce(getWithElPool, 100)
+    // const debounced = debounce(getWithElPool, 100)
 
     const handleEndReached = (event: CustomEvent<number>) => {
         const newElsNeeded = event.detail
 
         elementPool += newElsNeeded
 
-        debounced()
+        getWithElPool()
     }
 
     const debouncedHandleEnd = debounce(handleEndReached, 100)
