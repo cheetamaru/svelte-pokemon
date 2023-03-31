@@ -7,7 +7,7 @@
 
     export let elementCount = 100
     export let elementHeight = 130
-    export let containerHeight = 500;
+    export let containerHeight = 700;
     export let renderAhreadElementRowCount = 2
 
     export let elementsPerRow = 6
@@ -28,7 +28,7 @@
 
     $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
 
-    $: visibleElements = Array(visibleNodeCount || 0)
+    $: visibleElements = Array(visibleNodeCount < 0 ? 0 : visibleNodeCount)
         .fill(null)
         .map((_, index) => {
             return {
@@ -76,9 +76,9 @@
     }
 
     const handleNewElementAppear = (targetScrollTop: Element["scrollTop"]) => {
-        const isNewElementAppeared = Math.floor((targetScrollTop - maxScrollTop) / elementHeight) > 0
+        const isRowScrolled = Math.floor((targetScrollTop - maxScrollTop) / elementHeight) > 0
 
-        if (targetScrollTop > maxScrollTop && isNewElementAppeared) {
+        if (targetScrollTop > maxScrollTop && isRowScrolled) {
             maxScrollTop = targetScrollTop
 
             onNewElementAppear()
