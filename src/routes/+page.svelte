@@ -9,7 +9,7 @@
     }
 
     let offset = 0
-    let limit = 1281
+    let limit = 30
 
     let promise = getPokemonList()
 
@@ -19,7 +19,7 @@
 </script>
 
 <div>
-    <h1>Svelte Pokemon Pet Project</h1>
+    <h1>Svelte Virtual Scrolling Pet Project</h1>
     <main>
         {#await promise}
             ...Loading
@@ -30,3 +30,4 @@
         {/await}
     </main>
 </div>
+

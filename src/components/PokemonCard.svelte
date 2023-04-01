@@ -1,5 +1,6 @@
 <script>
     import { pokemonApi } from "../services/api/pokemonApi";
+    import LoadingDots from "./LoadingDots.svelte";
     import PokemonInfo from "./PokemonInfo.svelte";
 
     export let name = ''
@@ -11,7 +12,7 @@
 
 <div class="pokemon-card">
     {#await promise}
-        ...pokemon loading
+        <LoadingDots />
     {:then pokemon}
         <PokemonInfo {pokemon}/>
     {:catch error}

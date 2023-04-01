@@ -5,6 +5,7 @@
     import debounce from "lodash.debounce"
 
     import { pokemonApi } from "../services/api/pokemonApi";
+    import LoadingDots from "./LoadingDots.svelte";
 
     const { getList } = pokemonApi;
 
@@ -56,9 +57,11 @@
             bind:elementCount={total}
             on:endReached={debouncedHandleEnd}
             let:el
-        >
+        >   
             {#if !el}
-                Pokemon is loading
+                <div class="loading-dots">
+                    <LoadingDots />
+                </div>
             {:else}
                 <PokemonCard name="{el?.name}"/>
             {/if}
@@ -79,5 +82,12 @@
     align-items: center;
     justify-content: left;;
     width: 100%;
+}
+
+.loading-dots {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
 </style>
