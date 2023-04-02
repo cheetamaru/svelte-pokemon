@@ -45,15 +45,22 @@
 
     // TODO: fix bug when need to render rows does not work correctly
     // on elementsPerRow change
+
+    let box: HTMLElement
+
+    $: offsetTopOfScrollContainer = box?.offsetTop || 0
+
+    $: containerHeight = window.innerHeight - offsetTopOfScrollContainer
 </script>
 <div>
     Elements per row: <input type="number" min="1" max="15" bind:value={elementsPerRow}>
 </div>
-<div class="pokemon-card-list">
+<div class="pokemon-card-list" bind:this={box}>
     <div class="pokemon-card-list__main">
         <VirtualScroll
             {data}
             {elementsPerRow}
+            {containerHeight}
             bind:elementCount={total}
             on:endReached={debouncedHandleEnd}
             let:el

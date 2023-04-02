@@ -31,3 +31,8 @@
     </main>
 </div>
 
+<style>
+    :global(body) {
+       margin-bottom: 0;
+    }
+</style>
