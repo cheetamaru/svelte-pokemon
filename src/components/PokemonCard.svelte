@@ -22,7 +22,10 @@
 
 <style>
     .pokemon-card {
-        border: 1px solid black;
+        border: 1px solid rgba(0,0,0,0.1);
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin: 5px;
         display: flex;
         justify-content: center;
         align-items: center;

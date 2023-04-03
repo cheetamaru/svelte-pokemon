@@ -50,10 +50,15 @@
 
     $: offsetTopOfScrollContainer = box?.offsetTop || 0
 
-    $: containerHeight = window.innerHeight - offsetTopOfScrollContainer
+    $: containerHeight = window.innerHeight - offsetTopOfScrollContainer - 1
+
+    let elementHeight = 150
+
+    const forbidInputFromKeyboard = (e: Event) => e.preventDefault()
 </script>
 <div>
-    Elements per row: <input type="number" min="1" max="15" bind:value={elementsPerRow}>
+    Elements per row: <input type="number" min="1" max="15" bind:value={elementsPerRow} on:keydown={forbidInputFromKeyboard}> |
+    Element height: <input type="number" min="150" max="500" step="10" bind:value={elementHeight} on:keydown={forbidInputFromKeyboard}>
 </div>
 <div class="pokemon-card-list" bind:this={box}>
     <div class="pokemon-card-list__main">
@@ -61,6 +66,7 @@
             {data}
             {elementsPerRow}
             {containerHeight}
+            {elementHeight}
             bind:elementCount={total}
             on:endReached={debouncedHandleEnd}
             let:el

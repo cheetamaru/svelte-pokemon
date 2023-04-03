@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
     import { onMount } from 'svelte';
-    import debounce from "lodash.debounce"
 
     const dispatch = createEventDispatcher();
 
     export let elementCount = 100
-    export let elementHeight = 130
+    export let elementHeight = 150
     export let containerHeight = 700;
-    export let renderAhreadElementRowCount = 2
+    export let renderAhreadElementRowCount = 4
 
     export let elementsPerRow = 6
 
@@ -126,7 +125,6 @@
 <style>
     .virtual-scroll__container {
         overflow: auto;
-        background-color: blanchedalmond;
         width: 100%;
     }
 
@@ -140,11 +138,11 @@
         will-change: transform;
         display: flex;
         flex-wrap: wrap;
+        row-gap: 10px;
     }
 
     .virtual-scroll___element {
         display: block;
         box-sizing: border-box;
-        border: 1px solid blueviolet;
     }
 </style>
