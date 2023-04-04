@@ -29,8 +29,6 @@
         data = [...data, ...(await newData).results]
     }
 
-    // const debounced = debounce(getWithElPool, 100)
-
     const handleEndReached = (event: CustomEvent<number>) => {
         const newElsNeeded = event.detail
 

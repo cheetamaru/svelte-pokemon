@@ -1,14 +1,12 @@
-<div>
-    <div class="stage">
-      <div class="dot-pulse" />
-    </div>
+<div class="stage">
+  <div class="dot-pulse" />
 </div>
 
-
-<style>
-    /**
+<style scoped>
+/**
  * ==============================================
  * Dot Pulse
+ * Source: https://codepen.io/nzbin/pen/GGrXbp
  * ==============================================
  */
 .dot-pulse {

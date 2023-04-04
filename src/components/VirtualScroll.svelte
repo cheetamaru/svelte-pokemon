@@ -2,6 +2,8 @@
 	import { createEventDispatcher } from 'svelte';
     import { onMount } from 'svelte';
 
+    type T = $$Generic;
+
     const dispatch = createEventDispatcher();
 
     export let elementCount = 100
@@ -11,7 +13,7 @@
 
     export let elementsPerRow = 6
 
-    export let data: object[] = []
+    export let data: T[] = []
 
     $: totalContentHeight = Math.ceil(elementCount / elementsPerRow) * elementHeight
 
