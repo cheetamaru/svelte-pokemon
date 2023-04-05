@@ -54,9 +54,16 @@
 
     const forbidInputFromKeyboard = (e: Event) => e.preventDefault()
 </script>
-<div>
-    Elements per row: <input type="number" min="1" max="15" bind:value={elementsPerRow} on:keydown={forbidInputFromKeyboard}> |
-    Element height: <input type="number" min="150" max="500" step="10" bind:value={elementHeight} on:keydown={forbidInputFromKeyboard}>
+<div class="list-header">
+    <div>
+        Pokemon List with Virtual Scrolling
+    </div>
+    <div>
+        Elements per row: <input type="number" min="1" max="15" bind:value={elementsPerRow} on:keydown={forbidInputFromKeyboard}>
+    </div>
+    <div>
+        Element height: <input type="number" min="150" max="500" step="10" bind:value={elementHeight} on:keydown={forbidInputFromKeyboard}>
+    </div>
 </div>
 <div class="pokemon-card-list" bind:this={box}>
     <div class="pokemon-card-list__main">
@@ -82,6 +89,14 @@
 
 
 <style>
+.list-header {
+    display: flex;
+    border-bottom: 3px solid black;
+    padding: 10px;
+    column-gap: 15px;
+    height: auto;
+}
+
 .pokemon-card-list {
     display: flex;
     justify-content: center;

@@ -12,14 +12,13 @@
     let limit = 30
 
     let promise = getPokemonList()
-
-    const handleClick = () => {
-        promise = getPokemonList()
-    }
 </script>
 
+<svelte:head>
+	<title>Svelte Virtual Scrolling</title>
+</svelte:head>
+
 <div>
-    <h1>Svelte Virtual Scrolling Pet Project</h1>
     <main>
         {#await promise}
             ...Loading
@@ -33,6 +32,8 @@
 
 <style>
     :global(body) {
-       margin-bottom: 0;
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
     }
 </style>
