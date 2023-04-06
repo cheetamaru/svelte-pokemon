@@ -39,7 +39,11 @@
 
     const debouncedHandleEnd = debounce(handleEndReached, 100)
 
-    let elementsPerRow = 4
+    const elementsPerRowStorageKey = "elementsPerRow"
+    const elementsHeightStorageKey = "elementHeight"
+
+    let elementsPerRow = localStorage.getItem(elementsPerRowStorageKey) || 4
+    let elementHeight = localStorage.getItem(elementsHeightStorageKey) || 150
 
     // TODO: fix bug when need to render rows does not work correctly
     // on elementsPerRow change
@@ -50,20 +54,44 @@
 
     $: containerHeight = window.innerHeight - offsetTopOfScrollContainer - 1
 
-    let elementHeight = 150
-
     const forbidInputFromKeyboard = (e: Event) => e.preventDefault()
+
+    const onElementPerRowInput = (e: Event) => {
+        localStorage.setItem(elementsPerRowStorageKey, (e.target as HTMLInputElement)?.value)
+    }
+
+    const onElementHeightInput = (e: Event) => {
+        localStorage.setItem(elementsHeightStorageKey, (e.target as HTMLInputElement)?.value)
+    }
 </script>
 <div class="list-header">
-    <div>
+    <div class="list-header__title">
         Pokemon List with Virtual Scrolling
     </div>
-    <div>
-        Elements per row: <input type="number" min="1" max="15" bind:value={elementsPerRow} on:keydown={forbidInputFromKeyboard}>
+    <div class="list-header__actions">
+        <div>
+            Elements per row: <input
+                type="number"
+                min="1"
+                max="15"
+                bind:value={elementsPerRow}
+                on:keydown={forbidInputFromKeyboard}
+                on:input={onElementPerRowInput}
+            >
+        </div>
+        <div>
+            Element height: <input
+                type="number"
+                min="150"
+                max="500"
+                step="10"
+                bind:value={elementHeight}
+                on:keydown={forbidInputFromKeyboard}
+                on:input={onElementHeightInput}
+            >
+        </div>
     </div>
-    <div>
-        Element height: <input type="number" min="150" max="500" step="10" bind:value={elementHeight} on:keydown={forbidInputFromKeyboard}>
-    </div>
+
 </div>
 <div class="pokemon-card-list" bind:this={box}>
     <div class="pokemon-card-list__main">
@@ -92,9 +120,14 @@
 .list-header {
     display: flex;
     border-bottom: 3px solid black;
+    justify-content: space-between;
     padding: 10px;
-    column-gap: 15px;
     height: auto;
+}
+
+.list-header__actions {
+    display: flex;
+    column-gap: 15px;
 }
 
 .pokemon-card-list {
