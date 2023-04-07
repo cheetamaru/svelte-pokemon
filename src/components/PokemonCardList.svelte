@@ -42,8 +42,8 @@
     const elementsPerRowStorageKey = "elementsPerRow"
     const elementsHeightStorageKey = "elementHeight"
 
-    let elementsPerRow = localStorage.getItem(elementsPerRowStorageKey) || 4
-    let elementHeight = localStorage.getItem(elementsHeightStorageKey) || 150
+    let elementsPerRow = Number(localStorage.getItem(elementsPerRowStorageKey) || 4)
+    let elementHeight = Number(localStorage.getItem(elementsHeightStorageKey) || 150)
 
     // TODO: fix bug when need to render rows does not work correctly
     // on elementsPerRow change

@@ -12,11 +12,19 @@
 
 <div class="pokemon-info">
     <div class="pokemon-info__name">{capitalizedName} ({pokemon.id})</div>
-    <img src="{spriteSrc}" alt="{name} sprite"/>
+    <img class="pokemon-info__img" src="{spriteSrc}" alt="{name} sprite"/>
 </div>
 
 <style>
+    .pokemon-info {
+        height: 150px;
+    }
+
     .pokemon-info__name {
         text-align: center;
+    }
+
+    .pokemon-info__img {
+        height: 100px;
     }
 </style>
