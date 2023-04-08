@@ -1,18 +1,24 @@
 <script lang="ts">
     import type { Pokemon } from "pokenode-ts";
-    import { capitalize } from "../utils";
+    import { PokemonInfoDomain } from "../domains/PokemonInfoDomain";
 
     export let pokemon: Pokemon
 
-    $: name = pokemon.name
-    $: capitalizedName = capitalize(name)
+    const {
+        getImgAlt,
+        getImgSrc,
+        getInfoTitle,
+    } = PokemonInfoDomain;
 
-    $: spriteSrc = pokemon.sprites.front_default
+    $: infoTitle = getInfoTitle(pokemon)
+
+    $: src = getImgSrc(pokemon)
+    $: alt = getImgAlt(pokemon)
 </script>
 
 <div class="pokemon-info">
-    <div class="pokemon-info__name">{capitalizedName} ({pokemon.id})</div>
-    <img class="pokemon-info__img" src="{spriteSrc}" alt="{name} sprite"/>
+    <div class="pokemon-info__title">{infoTitle}</div>
+    <img class="pokemon-info__img" {src} {alt}/>
 </div>
 
 <style>
@@ -20,7 +26,7 @@
         height: 150px;
     }
 
-    .pokemon-info__name {
+    .pokemon-info__title {
         text-align: center;
     }
 
