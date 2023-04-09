@@ -23,7 +23,7 @@
 
 <style>
     .pokemon-info {
-        height: 150px;
+        height: inherit;
     }
 
     .pokemon-info__title {
@@ -31,6 +31,6 @@
     }
 
     .pokemon-info__img {
-        height: 100px;
+        height: 80%;
     }
 </style>
