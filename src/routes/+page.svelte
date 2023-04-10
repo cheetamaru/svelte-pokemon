@@ -1,17 +1,10 @@
 <script lang="ts">
     import PokemonCardList from "../components/PokemonCardList.svelte";
-    import { pokemonApi } from "../services/api/pokemonApi";
+    import { useInitialList } from "../useCases/useInitialList";
 
-    const { getList } = pokemonApi;
+    const { getInitialList } = useInitialList()
 
-    const getPokemonList = () => {
-        return getList(offset, limit)
-    }
-
-    let offset = 0
-    let limit = 30
-
-    let promise = getPokemonList()
+    let promise = getInitialList()
 </script>
 
 <svelte:head>
@@ -39,5 +32,9 @@
        padding: 0;
        box-sizing: border-box;
        font-family: 'Poppins', sans-serif;
+    }
+    
+    :root {
+    --main-color: black;
     }
 </style>

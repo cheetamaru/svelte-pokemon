@@ -119,7 +119,7 @@
 <style>
 .list-header {
     display: flex;
-    border-bottom: 3px solid black;
+    border-bottom: 3px solid var(--main-color);
     justify-content: space-between;
     padding: 10px;
     height: auto;
