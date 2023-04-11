@@ -66,7 +66,7 @@
 </script>
 <div class="list-header">
     <div class="list-header__title">
-        Pokemon List with Virtual Scrolling
+        🎏 Pokemon List with Virtual Scrolling
     </div>
     <div class="list-header__actions">
         <div>
