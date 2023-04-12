@@ -6,6 +6,7 @@
 
     import { pokemonApi } from "../services/api/pokemonApi";
     import LoadingDots from "./LoadingDots.svelte";
+    import { PokemonCardListDomain } from "../domains/PokemonCardListDomain";
 
     const { getList } = pokemonApi;
 
@@ -63,10 +64,12 @@
     const onElementHeightInput = (e: Event) => {
         localStorage.setItem(elementsHeightStorageKey, (e.target as HTMLInputElement)?.value)
     }
+
+    const { mainTitle } = PokemonCardListDomain
 </script>
 <div class="list-header">
     <div class="list-header__title">
-        🎏 Pokemon List with Virtual Scrolling
+        {mainTitle}
     </div>
     <div class="list-header__actions">
         <div>
