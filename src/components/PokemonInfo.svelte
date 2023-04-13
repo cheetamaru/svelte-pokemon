@@ -22,15 +22,11 @@
 </div>
 
 <style>
-    .pokemon-info {
-        height: inherit;
-    }
-
     .pokemon-info__title {
         text-align: center;
     }
 
     .pokemon-info__img {
-        height: 80%;
+        max-height: 100px;
     }
 </style>

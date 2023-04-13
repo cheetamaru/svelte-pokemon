@@ -1,6 +1,6 @@
 <script lang="ts">
-    import LoadingDots from "../components/LoadingDots.svelte";
-import PokemonCardList from "../components/PokemonCardList.svelte";
+    import PageLoadingStub from "../components/PageLoadingStub.svelte";
+    import PokemonCardList from "../components/PokemonCardList.svelte";
     import { useInitialList } from "../useCases/useInitialList";
 
     const { getInitialList } = useInitialList()
@@ -16,11 +16,9 @@ import PokemonCardList from "../components/PokemonCardList.svelte";
 </svelte:head>
 
 <div>
-    <main>    
+    <main>
         {#await promise}
-            <div class="page-loading">
-                <LoadingDots />
-            </div>
+            <PageLoadingStub />
         {:then list}
             <PokemonCardList {list} />
         {:catch error}
@@ -39,12 +37,5 @@ import PokemonCardList from "../components/PokemonCardList.svelte";
     
     :root {
         --main-color: black;
-    }
-
-    .page-loading {
-        display: flex;
-        height: 100vh;
-        align-items: center;
-        justify-content: center;
     }
 </style>

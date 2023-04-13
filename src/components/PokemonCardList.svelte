@@ -6,7 +6,9 @@
 
     import { pokemonApi } from "../services/api/pokemonApi";
     import LoadingDots from "./LoadingDots.svelte";
-    import { PokemonCardListDomain } from "../domains/PokemonCardListDomain";
+    import { MainPageDomain } from "../domains/MainPageDomain";
+
+    const { mainTitle } = MainPageDomain;
 
     const { getList } = pokemonApi;
 
@@ -43,7 +45,7 @@
     const elementsPerRowStorageKey = "elementsPerRow"
     const elementsHeightStorageKey = "elementHeight"
 
-    let elementsPerRow = Number(localStorage.getItem(elementsPerRowStorageKey) || 4)
+    let elementsPerRow = Number(localStorage.getItem(elementsPerRowStorageKey) || 4) // todo: add check for min and max values
     let elementHeight = Number(localStorage.getItem(elementsHeightStorageKey) || 150)
 
     // TODO: fix bug when need to render rows does not work correctly
@@ -65,7 +67,7 @@
         localStorage.setItem(elementsHeightStorageKey, (e.target as HTMLInputElement)?.value)
     }
 
-    const { mainTitle } = PokemonCardListDomain
+
 </script>
 <div class="list-header">
     <div class="list-header__title">
@@ -76,7 +78,7 @@
             Elements per row: <input
                 type="number"
                 min="1"
-                max="15"
+                max="10"
                 bind:value={elementsPerRow}
                 on:keydown={forbidInputFromKeyboard}
                 on:input={onElementPerRowInput}
@@ -86,7 +88,7 @@
             Element height: <input
                 type="number"
                 min="150"
-                max="500"
+                max="300"
                 step="10"
                 bind:value={elementHeight}
                 on:keydown={forbidInputFromKeyboard}
