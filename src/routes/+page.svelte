@@ -1,9 +1,9 @@
 <script lang="ts">
     import PageLoadingStub from "../components/PageLoadingStub.svelte";
     import PokemonCardList from "../components/PokemonCardList.svelte";
-    import { useInitialList } from "../useCases/useInitialList";
+    import { useInitialPokemonList } from "../useCases/useInitialPokemonList";
 
-    const { getInitialList } = useInitialList()
+    const { getInitialList } = useInitialPokemonList()
 
     let promise = getInitialList()
 </script>

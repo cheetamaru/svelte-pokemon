@@ -1,16 +1,26 @@
 <script lang="ts">
     import type { NamedAPIResourceList, NamedAPIResource } from "pokenode-ts";
+    import debounce from "lodash.debounce"
+    import { pokemonApi } from "../services/api/pokemonApi";
     import PokemonCard from "../components/PokemonCard.svelte";
     import VirtualScroll from "../components/VirtualScroll.svelte";
-    import debounce from "lodash.debounce"
-
-    import { pokemonApi } from "../services/api/pokemonApi";
     import LoadingDots from "./LoadingDots.svelte";
+
     import { MainPageDomain } from "../domains/MainPageDomain";
+    import { PokemonListDomain } from "../domains/PokemonListDomain";
+    import { usePokemonListInputs } from "../useCases/usePokemonListInputs";
 
     const { mainTitle } = MainPageDomain;
+    const { elementHeightSettings, elementsPerRowSettings } = PokemonListDomain
 
     const { getList } = pokemonApi;
+
+    const { 
+        getInitialElementPerRow,
+        getInitialElementHeight,
+        onElementPerRowInput,
+        onElementHeightInput,
+     } = usePokemonListInputs()
 
     export let list: NamedAPIResourceList
 
@@ -42,11 +52,8 @@
 
     const debouncedHandleEnd = debounce(handleEndReached, 100)
 
-    const elementsPerRowStorageKey = "elementsPerRow"
-    const elementsHeightStorageKey = "elementHeight"
-
-    let elementsPerRow = Number(localStorage.getItem(elementsPerRowStorageKey) || 4) // todo: add check for min and max values
-    let elementHeight = Number(localStorage.getItem(elementsHeightStorageKey) || 150)
+    let elementsPerRow = getInitialElementPerRow()
+    let elementHeight = getInitialElementHeight()
 
     // TODO: fix bug when need to render rows does not work correctly
     // on elementsPerRow change
@@ -54,21 +61,11 @@
     let box: HTMLElement
 
     $: offsetTopOfScrollContainer = box?.offsetTop || 0
-
     $: containerHeight = window.innerHeight - offsetTopOfScrollContainer - 1
 
-    const forbidInputFromKeyboard = (e: Event) => e.preventDefault()
-
-    const onElementPerRowInput = (e: Event) => {
-        localStorage.setItem(elementsPerRowStorageKey, (e.target as HTMLInputElement)?.value)
-    }
-
-    const onElementHeightInput = (e: Event) => {
-        localStorage.setItem(elementsHeightStorageKey, (e.target as HTMLInputElement)?.value)
-    }
-
-
+    const forbidInputFromKeyboard = (e: Event) => e.preventDefault() // todo: use mpre elegant solution
 </script>
+
 <div class="list-header">
     <div class="list-header__title">
         {mainTitle}
@@ -77,8 +74,8 @@
         <div>
             Elements per row: <input
                 type="number"
-                min="1"
-                max="10"
+                min={elementsPerRowSettings.min}
+                max={elementsPerRowSettings.max}
                 bind:value={elementsPerRow}
                 on:keydown={forbidInputFromKeyboard}
                 on:input={onElementPerRowInput}
@@ -87,9 +84,9 @@
         <div>
             Element height: <input
                 type="number"
-                min="150"
-                max="300"
-                step="10"
+                min={elementHeightSettings.min}
+                max={elementHeightSettings.max}
+                step={elementHeightSettings.step}
                 bind:value={elementHeight}
                 on:keydown={forbidInputFromKeyboard}
                 on:input={onElementHeightInput}

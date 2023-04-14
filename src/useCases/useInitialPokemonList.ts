@@ -5,7 +5,7 @@ const  { initialListSettings }  = PokemonListDomain
 
 const { offset, limit } = initialListSettings
 
-export const useInitialList = () => {
+export const useInitialPokemonList = () => {
     const { getList } = pokemonApi
 
     const getInitialList = () => {
