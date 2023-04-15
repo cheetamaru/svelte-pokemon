@@ -1,21 +1,27 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
     import { onMount } from 'svelte';
+    import { VirtualScrollDomain } from '../domains/VirtualScrollDomain';
 
     type T = $$Generic;
 
     const dispatch = createEventDispatcher();
 
-    export let elementCount = 100
-    export let elementHeight = 150
-    export let containerHeight = 700;
-    export let renderAhreadElementRowCount = 4
+    const { defaultValues, getTotalContentHeight } = VirtualScrollDomain
 
-    export let elementsPerRow = 6
+    export let elementCount: number = defaultValues.elementCount
+    export let elementHeight: number = defaultValues.elementHeight
+    export let containerHeight: number = defaultValues.containerHeight;
+    export let renderAhreadElementRowCount: number = defaultValues.renderAhreadElementRowCount
+    export let elementsPerRow: number = defaultValues.elementsPerRow
 
     export let data: T[] = []
 
-    $: totalContentHeight = Math.ceil(elementCount / elementsPerRow) * elementHeight
+    $: totalContentHeight = getTotalContentHeight({
+        elementCount,
+        elementsPerRow,
+        elementHeight
+    })
 
     let scrollTop = 0
     let maxScrollTop = scrollTop
@@ -104,6 +110,8 @@
     onMount(() => {
         computeDataToAdd()
     })
+
+    $: elementWidthInPercent = 100 / elementsPerRow
 </script>
 
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
@@ -114,7 +122,7 @@
                     class="virtual-scroll___element"
                     style="
                         height: {elementHeight}px;
-                        width: {100 / elementsPerRow}%
+                        width: {elementWidthInPercent}%
                     "
                 >
                     <slot {el} />

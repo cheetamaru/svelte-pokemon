@@ -61,7 +61,7 @@
     let box: HTMLElement
 
     $: offsetTopOfScrollContainer = box?.offsetTop || 0
-    $: containerHeight = window.innerHeight - offsetTopOfScrollContainer - 1
+    $: containerHeight = window.innerHeight - offsetTopOfScrollContainer
 
     const forbidInputFromKeyboard = (e: Event) => e.preventDefault() // todo: use mpre elegant solution
 </script>
@@ -93,7 +93,6 @@
             >
         </div>
     </div>
-
 </div>
 <div class="pokemon-card-list" bind:this={box}>
     <div class="pokemon-card-list__main">
