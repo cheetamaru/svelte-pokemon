@@ -1,7 +1,10 @@
 <script lang="ts">
     import PageLoadingStub from "../components/PageLoadingStub.svelte";
     import PokemonCardList from "../components/PokemonCardList.svelte";
+    import { MainPageDomain } from "../domains/MainPageDomain";
     import { useInitialPokemonList } from "../useCases/useInitialPokemonList";
+
+    const { metaTitle } = MainPageDomain
 
     const { getInitialList } = useInitialPokemonList()
 
@@ -9,7 +12,7 @@
 </script>
 
 <svelte:head>
-	<title>Svelte Virtual Scrolling</title>
+	<title>{metaTitle}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap" rel="stylesheet">
