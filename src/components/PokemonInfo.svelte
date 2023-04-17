@@ -18,15 +18,32 @@
 
 <div class="pokemon-info">
     <div class="pokemon-info__title">{infoTitle}</div>
-    <img class="pokemon-info__img" {src} {alt}/>
+    {#if src}
+        <img class="pokemon-info__img" {src} {alt}/>
+    {:else}
+        <div class="pokemon-info__not-found">😢😭😨<br>Image<br>Not<br>found</div>
+    {/if}
+    
 </div>
 
 <style>
+    .pokemon-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .pokemon-info__title {
         text-align: center;
     }
 
     .pokemon-info__img {
         max-height: 100px;
+    }
+
+    .pokemon-info__not-found {
+        height: 96px;
+        width: 96px;
+        text-align: center;
     }
 </style>

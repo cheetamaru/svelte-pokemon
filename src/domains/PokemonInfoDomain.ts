@@ -1,15 +1,15 @@
 import type { Pokemon } from "pokenode-ts";
 import { capitalize } from "../utils";
 
-const getImgAlt = (pokemon: Pokemon) => {
+const getImgAlt = (pokemon: Pokemon): string => {
     return `${pokemon.name} sprite`
 }
 
-const getImgSrc = (pokemon: Pokemon) => {
+const getImgSrc = (pokemon: Pokemon): string | null => {
     return pokemon.sprites.front_default
 }
 
-const getInfoTitle = (pokemon: Pokemon) => {
+const getInfoTitle = (pokemon: Pokemon): string => {
     const capitalizedName = capitalize(pokemon.name)
 
     return `${capitalizedName} (${pokemon.id})`
