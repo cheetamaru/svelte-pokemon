@@ -59,18 +59,14 @@
         return dispatch('endReached', elementsToAddCount) 
     }
 
-    const updateDataOnInput = () => {
-        computeDataToAdd(0)
-    }
-
     let lastNeedToRenderCount = -1
 
-    const onNewElementAppear = () => {
+    const handleNewElementAppear = () => {
         const bufferHeight = elementHeight * renderAhreadElementRowCount
 
-        const supposeToRenderZoneHeight = maxScrollTop + containerHeight + bufferHeight
+        const supposedToRenderZoneHeight = maxScrollTop + containerHeight + bufferHeight
 
-        const needToRenderRowsCount = Math.ceil(supposeToRenderZoneHeight / elementHeight)
+        const needToRenderRowsCount = Math.ceil(supposedToRenderZoneHeight / elementHeight)
         const renderedRowsCount = Math.floor(data.length / elementsPerRow)
 
         if (needToRenderRowsCount > renderedRowsCount && needToRenderRowsCount != lastNeedToRenderCount) {
@@ -82,13 +78,13 @@
         }
     }
 
-    const handleNewElementAppear = (targetScrollTop: Element["scrollTop"]) => {
+    const handleScrollTopChange = (targetScrollTop: Element["scrollTop"]) => {
         const isRowScrolled = Math.floor((targetScrollTop - maxScrollTop) / elementHeight) > 0
 
         if (targetScrollTop > maxScrollTop && isRowScrolled) {
             maxScrollTop = targetScrollTop
 
-            onNewElementAppear()
+            handleNewElementAppear()
         }
     }
 
@@ -97,14 +93,14 @@
             if (e.target instanceof Element) {
                 scrollTop = e.target.scrollTop
 
-                handleNewElementAppear(e.target.scrollTop)
+                handleScrollTopChange(scrollTop)
             }
         });
     }
 
     $: {
         const a = [elementsPerRow]
-        updateDataOnInput()
+        handleNewElementAppear()
     }
 
     onMount(() => {

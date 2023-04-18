@@ -6,15 +6,17 @@ const defaultValues = {
     elementsPerRow: 6,
 }
 
+type GetTotalContentHeightParams = {
+    elementCount: number;
+    elementsPerRow: number;
+    elementHeight: number;
+}
+
 const getTotalContentHeight = ({
     elementCount,
     elementsPerRow,
     elementHeight
-}: {
-    elementCount: number;
-    elementsPerRow: number;
-    elementHeight: number;
-}) => {
+}: GetTotalContentHeightParams): number => {
     return Math.ceil(elementCount / elementsPerRow) * elementHeight
 }
 
