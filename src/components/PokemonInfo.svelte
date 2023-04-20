@@ -17,7 +17,7 @@
 </script>
 
 <div class="pokemon-info">
-    <div class="pokemon-info__title">{infoTitle}</div>    
+    <div class="pokemon-info__title" title={infoTitle}>{infoTitle}</div>    
     {#if src}
         <img class="pokemon-info__img" {src} {alt}/>
     {:else}
@@ -33,10 +33,15 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%
     }
 
     .pokemon-info__title {
+        width: 90%;
         text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .pokemon-info__img {
