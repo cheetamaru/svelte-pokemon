@@ -144,7 +144,6 @@
         will-change: transform;
         display: flex;
         flex-wrap: wrap;
-        row-gap: 10px;
     }
 
     .virtual-scroll___element {
