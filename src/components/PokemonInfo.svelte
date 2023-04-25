@@ -8,6 +8,7 @@
         getImgAlt,
         getImgSrc,
         getInfoTitle,
+        notFoundMessage,
     } = PokemonInfoDomain;
 
     $: infoTitle = getInfoTitle(pokemon)
@@ -23,7 +24,7 @@
     {:else}
         <div class="pokemon-info__not-found">
             <img class="pokemon-info__not-found-img" src="/substitute_sprite.png" {alt}/>
-            <div class="pokemon-info__not-found-subtitle">Image not found</div>
+            <div class="pokemon-info__not-found-subtitle">{notFoundMessage}</div>
         </div>
     {/if}
 </div>

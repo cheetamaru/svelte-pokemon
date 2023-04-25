@@ -63,7 +63,7 @@
     $: offsetTopOfScrollContainer = box?.offsetTop || 0
     $: containerHeight = window.innerHeight - offsetTopOfScrollContainer
 
-    const forbidInputFromKeyboard = (e: Event) => e.preventDefault() // todo: use mpre elegant solution
+    const forbidInputFromKeyboard = (e: Event) => e.preventDefault() // todo: use more elegant solution
 </script>
 
 <div class="list-header">

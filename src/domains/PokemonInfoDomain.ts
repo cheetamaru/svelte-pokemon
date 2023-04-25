@@ -1,6 +1,8 @@
 import type { Pokemon } from "pokenode-ts";
 import { capitalize } from "../utils";
 
+const notFoundMessage = 'Image not found';
+
 const getImgAlt = (pokemon: Pokemon): string => {
     return `${pokemon.name} sprite`
 }
@@ -19,4 +21,5 @@ export const PokemonInfoDomain = {
     getImgAlt,
     getImgSrc,
     getInfoTitle,
+    notFoundMessage,
 }
