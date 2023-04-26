@@ -63,7 +63,43 @@
     $: offsetTopOfScrollContainer = box?.offsetTop || 0
     $: containerHeight = window.innerHeight - offsetTopOfScrollContainer
 
-    const forbidInputFromKeyboard = (e: Event) => e.preventDefault() // todo: use more elegant solution
+    const checkElementsPerRow = (e: Event) => {
+        const a  = Number((e.target as HTMLInputElement).value)
+
+        const {min, max} = elementsPerRowSettings
+
+        if (a < min) {
+            elementsPerRow = min
+            return e.preventDefault()
+
+        }
+
+        if (a > max) {
+            elementsPerRow = max
+            return e.preventDefault()
+        }
+
+        elementsPerRow = a
+    }
+
+    const checkElementHeight = (e: Event) => {
+        const a  = Number((e.target as HTMLInputElement).value)
+
+        const {min, max} = elementHeightSettings
+
+        if (a < min) {
+            elementHeight = min
+            return e.preventDefault()
+
+        }
+
+        if (a > max) {
+            elementHeight = max
+            return e.preventDefault()
+        }
+
+        elementHeight = a
+    }
 </script>
 
 <div class="list-header">
@@ -77,7 +113,7 @@
                 min={elementsPerRowSettings.min}
                 max={elementsPerRowSettings.max}
                 bind:value={elementsPerRow}
-                on:keydown={forbidInputFromKeyboard}
+                on:keyup={checkElementsPerRow}
                 on:input={onElementPerRowInput}
             >
         </div>
@@ -88,7 +124,7 @@
                 max={elementHeightSettings.max}
                 step={elementHeightSettings.step}
                 bind:value={elementHeight}
-                on:keydown={forbidInputFromKeyboard}
+                on:keyup={checkElementHeight}
                 on:input={onElementHeightInput}
             >
         </div>
