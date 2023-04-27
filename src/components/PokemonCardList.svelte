@@ -9,6 +9,7 @@
     import { MainPageDomain } from "../domains/MainPageDomain";
     import { PokemonListDomain } from "../domains/PokemonListDomain";
     import { usePokemonListInputs } from "../useCases/usePokemonListInputs";
+    import { getEventTargetValue } from "../utils";
 
     const { mainTitle } = MainPageDomain;
     const { elementHeightSettings, elementsPerRowSettings } = PokemonListDomain
@@ -64,7 +65,7 @@
     $: containerHeight = window.innerHeight - offsetTopOfScrollContainer
 
     const checkElementsPerRow = (e: Event) => {
-        const a  = Number((e.target as HTMLInputElement).value)
+        const a  = Number(getEventTargetValue(e))
 
         const {min, max} = elementsPerRowSettings
 
@@ -83,7 +84,7 @@
     }
 
     const checkElementHeight = (e: Event) => {
-        const a  = Number((e.target as HTMLInputElement).value)
+        const a  = Number(getEventTargetValue(e))
 
         const {min, max} = elementHeightSettings
 

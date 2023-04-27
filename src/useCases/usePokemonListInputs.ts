@@ -1,5 +1,6 @@
 import { PersistentStorageDomain } from "../domains/PersistentStorageDomain";
 import { PokemonListDomain } from "../domains/PokemonListDomain";
+import { getEventTargetValue } from "../utils";
 
 type GetInitialValueParams = {
     min: number;
@@ -58,11 +59,11 @@ export const usePokemonListInputs = () => {
     }
 
     const onElementPerRowInput = (e: Event) => {
-        setItem(elementsPerRowStorageKey, (e.target as HTMLInputElement)?.value)
+        setItem(elementsPerRowStorageKey, getEventTargetValue(e))
     }
 
     const onElementHeightInput = (e: Event) => {
-        setItem(elementsHeightStorageKey, (e.target as HTMLInputElement)?.value)
+        setItem(elementsHeightStorageKey, getEventTargetValue(e))
     }
 
     return {
