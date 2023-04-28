@@ -1,13 +1,14 @@
-# Svelte Pokemon Pet Project
+# Svelte Virtual Scrolling Pet Project
 
-Pokemon list display using https://pokeapi.co/
+Pokemon list with virtual scrolling
+
+API: https://pokeapi.co/
 
 ## Goals:
 
-1. Show my frontend architecture skills by creating a project using the framework I don't normally use
+1. Show my frontend skills by creating a project using the framework I don't use
 2. Implement virtual scrolling, examine different approaches of creating it
-3. Explore accessibility features and their implementations
-4. Have fun
+3. Have fun
 
 ## TODO List:
 
@@ -15,7 +16,6 @@ Pokemon list display using https://pokeapi.co/
 - [x] Item layout and design
 - [ ] Virtual Scrolling - in Progress (bug fixing)
 - [ ] Adaptive layout
-- [ ] Accessibility
 - [ ] Deployment
 
 ## Developing
