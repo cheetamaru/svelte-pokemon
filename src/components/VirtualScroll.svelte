@@ -5,6 +5,11 @@
 
     type T = $$Generic;
 
+    type VisibleElement = {
+        el: T;
+        index: number;
+    }
+
     const dispatch = createEventDispatcher();
 
     const { defaultValues, getTotalContentHeight } = VirtualScrollDomain
@@ -35,7 +40,12 @@
 
     $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
 
-    $: visibleElements = Array(visibleNodeCount < 0 ? 0 : visibleNodeCount)
+    const getVisibleElementsLength = (visibleNodeCount: number) => {
+        return visibleNodeCount < 0 ? 0 : visibleNodeCount
+    }
+
+    let visibleElements: VisibleElement[]
+    $: visibleElements = Array(getVisibleElementsLength(visibleNodeCount))
         .fill(null)
         .map((_, index) => {
             return {
