@@ -48,21 +48,24 @@
     $: visibleElements = Array(getVisibleElementsLength(visibleNodeCount))
         .fill(null)
         .map((_, index) => {
+            const actualIndex = index + lastInRowRenderedElementIndex
+
             return {
-                el: data[index + lastInRowRenderedElementIndex],
-                index: index + lastInRowRenderedElementIndex,
+                el: data[actualIndex],
+                index: actualIndex,
             }
         })
 
     const computeDataToAdd = (newRows: number = 0) => {
         let elementsToAddCount = newRows * elementsPerRow
+        const dataLength = data.length
 
-        if (data.length + elementsToAddCount < visibleNodeCount) {
+        if (dataLength + elementsToAddCount < visibleNodeCount) {
             elementsToAddCount += visibleNodeCount
         }
 
-        if (data.length + elementsToAddCount > elementCount) {
-            const diff = elementCount - data.length
+        if (dataLength + elementsToAddCount > elementCount) {
+            const diff = elementCount - dataLength
             elementsToAddCount = diff > 0 ? diff : 0
         }
 
@@ -79,7 +82,7 @@
         const needToRenderRowsCount = Math.ceil(supposedToRenderZoneHeight / elementHeight)
         const renderedRowsCount = Math.floor(data.length / elementsPerRow)
 
-        if (needToRenderRowsCount > renderedRowsCount && needToRenderRowsCount != lastNeedToRenderCount) {
+        if (needToRenderRowsCount > renderedRowsCount && needToRenderRowsCount !== lastNeedToRenderCount) {
             const diffInRows = needToRenderRowsCount - renderedRowsCount
 
             lastNeedToRenderCount = needToRenderRowsCount
@@ -109,7 +112,7 @@
     }
 
     $: {
-        const a = [elementsPerRow]
+        const arrayToTriggerReactivity = [elementsPerRow]
         handleNewElementAppear()
     }
 
