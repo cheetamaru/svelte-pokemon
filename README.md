@@ -14,9 +14,14 @@ API: https://pokeapi.co/
 
 - [x] API layer (sort of)
 - [x] Item layout and design
-- [ ] Virtual Scrolling - in Progress (bug fixing)
-- [ ] Adaptive layout
+- [x] Virtual Scrolling
+- [ ] Refactor
 - [ ] Deployment
+
+## Bugs:
+
+- [ ] Scroll and increase elements number - items don't load
+- [ ] Input a big number in a input and the number briefly appears
 
 ## Developing
 
