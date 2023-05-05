@@ -14,7 +14,7 @@
     const { mainTitle } = MainPageDomain;
     const { elementHeightSettings, elementsPerRowSettings } = PokemonListDomain
 
-    const { getList } = pokemonApi;
+    const { getPokemonList } = pokemonApi;
 
     const { 
         getInitialElementPerRow,
@@ -36,7 +36,7 @@
             return
         }
 
-        const newData = getList(data.length, elementPool)
+        const newData = getPokemonList(data.length, elementPool)
 
         elementPool = 0
 

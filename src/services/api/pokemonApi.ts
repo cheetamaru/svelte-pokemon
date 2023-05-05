@@ -6,11 +6,11 @@ const getPokemonByName = (name: string) => {
     return api.getPokemonByName(name)
 }
 
-const getList = (offset?: number, limit?: number) => {
+const getPokemonList = (offset?: number, limit?: number) => {
     return api.listPokemons(offset, limit)
 }
 
 export const pokemonApi = {
     getPokemonByName,
-    getList,
+    getPokemonList,
 }
