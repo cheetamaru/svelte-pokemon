@@ -16,6 +16,18 @@ const elementHeightSettings = {
     defaultValue: 150
 }
 
+const getValueInRange = ({val, min, max}: {val: number, min: number, max: number}) => {
+    if (val < min) {
+        return min;
+    }
+
+    if (val > max) {
+        return max
+    }
+
+    return val
+}
+
 const elementsPerRowStorageKey = "elementsPerRow"
 const elementsHeightStorageKey = "elementHeight"
 
@@ -25,4 +37,5 @@ export const PokemonListDomain = {
     elementHeightSettings,
     elementsPerRowStorageKey,
     elementsHeightStorageKey,
+    getValueInRange,
 }

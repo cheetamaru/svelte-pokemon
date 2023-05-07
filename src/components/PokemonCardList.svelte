@@ -12,7 +12,7 @@
     import { getEventTargetValue } from "../utils";
 
     const { mainTitle } = MainPageDomain;
-    const { elementHeightSettings, elementsPerRowSettings } = PokemonListDomain
+    const { elementHeightSettings, elementsPerRowSettings, getValueInRange } = PokemonListDomain
 
     const { getPokemonList } = pokemonApi;
 
@@ -65,41 +65,31 @@
     $: containerHeight = window.innerHeight - offsetTopOfScrollContainer
 
     const checkElementsPerRow = (e: Event) => {
-        const a  = Number(getEventTargetValue(e))
+        const val  = Number(getEventTargetValue(e))
 
         const {min, max} = elementsPerRowSettings
 
-        if (a < min) {
-            elementsPerRow = min
-            return e.preventDefault()
+        elementsPerRow = getValueInRange({
+            val, min, max
+        })
 
+        if (elementsPerRow !== val) {
+            e.preventDefault()
         }
-
-        if (a > max) {
-            elementsPerRow = max
-            return e.preventDefault()
-        }
-
-        elementsPerRow = a
     }
 
     const checkElementHeight = (e: Event) => {
-        const a  = Number(getEventTargetValue(e))
+        const val = Number(getEventTargetValue(e))
 
         const {min, max} = elementHeightSettings
 
-        if (a < min) {
-            elementHeight = min
-            return e.preventDefault()
+        elementHeight = getValueInRange({
+            val, min, max
+        })
 
+        if (elementHeight !== val) {
+            e.preventDefault()
         }
-
-        if (a > max) {
-            elementHeight = max
-            return e.preventDefault()
-        }
-
-        elementHeight = a
     }
 </script>
 
