@@ -73,6 +73,7 @@
     }
 
     let lastNeedToRenderCount = -1
+    let lastRenderedCount = -1
 
     const handleNewElementAppear = () => {
         const bufferHeight = elementHeight * renderAhreadElementRowCount
@@ -82,6 +83,11 @@
         const needToRenderRowsCount = Math.ceil(supposedToRenderZoneHeight / elementHeight)
         const renderedRowsCount = Math.floor(data.length / elementsPerRow)
 
+        if (renderedRowsCount < lastRenderedCount + 3) {
+            lastNeedToRenderCount = -1
+            lastNeedToRenderCount = -1
+        }
+
         if (needToRenderRowsCount > renderedRowsCount && needToRenderRowsCount !== lastNeedToRenderCount) {
             const diffInRows = needToRenderRowsCount - renderedRowsCount
 
@@ -89,6 +95,8 @@
 
             computeDataToAdd(diffInRows)
         }
+
+        lastRenderedCount = renderedRowsCount
     }
 
     const handleScrollTopChange = (targetScrollTop: Element["scrollTop"]) => {
