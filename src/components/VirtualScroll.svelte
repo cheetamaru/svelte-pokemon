@@ -120,7 +120,7 @@
     }
 
     $: {
-        const arrayToTriggerReactivity = [elementsPerRow]
+        const arrayToTriggerReactivity = [elementsPerRow, elementHeight]
         handleNewElementAppear()
     }
 
