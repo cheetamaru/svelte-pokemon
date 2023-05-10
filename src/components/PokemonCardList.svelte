@@ -56,41 +56,29 @@
     let elementsPerRow = getInitialElementPerRow()
     let elementHeight = getInitialElementHeight()
 
-    // TODO: fix bug when need to render rows does not work correctly
-    // on elementsPerRow change
-
     let box: HTMLElement
 
     $: offsetTopOfScrollContainer = box?.offsetTop || 0
     $: containerHeight = window.innerHeight - offsetTopOfScrollContainer
 
-    const checkElementsPerRow = (e: Event) => {
-        const val  = Number(getEventTargetValue(e))
-
+    const checkElementsPerRow = (val: number) => {
         const {min, max} = elementsPerRowSettings
 
         elementsPerRow = getValueInRange({
             val, min, max
         })
-
-        if (elementsPerRow !== val) {
-            e.preventDefault()
-        }
     }
 
-    const checkElementHeight = (e: Event) => {
-        const val = Number(getEventTargetValue(e))
-
+    const checkElementHeight = (val: number) => {
         const {min, max} = elementHeightSettings
 
         elementHeight = getValueInRange({
             val, min, max
         })
-
-        if (elementHeight !== val) {
-            e.preventDefault()
-        }
     }
+
+    $: checkElementsPerRow(elementsPerRow)
+    $: checkElementHeight(elementHeight)
 </script>
 
 <div class="list-header">
@@ -104,7 +92,6 @@
                 min={elementsPerRowSettings.min}
                 max={elementsPerRowSettings.max}
                 bind:value={elementsPerRow}
-                on:keyup={checkElementsPerRow}
                 on:input={onElementPerRowInput}
             >
         </div>
@@ -115,7 +102,6 @@
                 max={elementHeightSettings.max}
                 step={elementHeightSettings.step}
                 bind:value={elementHeight}
-                on:keyup={checkElementHeight}
                 on:input={onElementHeightInput}
             >
         </div>
