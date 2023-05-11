@@ -18,10 +18,13 @@ API: https://pokeapi.co/
 - [ ] Refactor
 - [ ] Deployment
 
-## Bugs:
+## To Refactor:
 
-- [ ] Scroll and increase elements number - items don't load
-- [ ] Input a big number in a input and the number briefly appears
+- [ ] import paths (?)
+- [ ] `PokemonCardList.svelte`
+- [ ] `VirtualScroll.svelte`
+- [ ] tests
+
 
 ## Developing
 

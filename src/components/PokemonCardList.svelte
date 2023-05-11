@@ -9,7 +9,6 @@
     import { MainPageDomain } from "../domains/MainPageDomain";
     import { PokemonListDomain } from "../domains/PokemonListDomain";
     import { usePokemonListInputs } from "../useCases/usePokemonListInputs";
-    import { getEventTargetValue } from "../utils";
 
     const { mainTitle } = MainPageDomain;
     const { elementHeightSettings, elementsPerRowSettings, getValueInRange } = PokemonListDomain
