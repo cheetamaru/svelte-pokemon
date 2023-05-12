@@ -1,7 +1,7 @@
 <script>
-    import { pokemonApi } from "../services/api/pokemonApi";
-    import LoadingDots from "./LoadingDots.svelte";
-    import PokemonInfo from "./PokemonInfo.svelte";
+    import { pokemonApi } from "@/services/api/pokemonApi";
+    import LoadingDots from "@/components/LoadingDots.svelte";
+    import PokemonInfo from "@/components/PokemonInfo.svelte";
 
     export let name = ''
 

@@ -20,7 +20,6 @@ API: https://pokeapi.co/
 
 ## To Refactor:
 
-- [ ] import paths (?)
 - [ ] `PokemonCardList.svelte`
 - [ ] `VirtualScroll.svelte`
 - [ ] tests

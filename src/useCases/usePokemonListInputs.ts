@@ -1,6 +1,6 @@
-import { PersistentStorageDomain } from "../domains/PersistentStorageDomain";
-import { PokemonListDomain } from "../domains/PokemonListDomain";
-import { getEventTargetValue } from "../utils";
+import { PersistentStorageDomain } from "@/domains/PersistentStorageDomain";
+import { PokemonListDomain } from "@/domains/PokemonListDomain";
+import { getEventTargetValue } from "@/utils";
 
 type GetInitialValueParams = {
     min: number;

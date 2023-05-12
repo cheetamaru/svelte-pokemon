@@ -1,5 +1,5 @@
-import { PokemonListDomain } from "../domains/PokemonListDomain";
-import { pokemonApi } from "../services/api/pokemonApi";
+import { PokemonListDomain } from "@/domains/PokemonListDomain";
+import { pokemonApi } from "@/services/api/pokemonApi";
 
 const  { initialListSettings }  = PokemonListDomain
 

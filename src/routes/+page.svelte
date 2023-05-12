@@ -1,8 +1,8 @@
 <script lang="ts">
-    import PageLoadingStub from "../components/PageLoadingStub.svelte";
-    import PokemonCardList from "../components/PokemonCardList.svelte";
-    import { MainPageDomain } from "../domains/MainPageDomain";
-    import { useInitialPokemonList } from "../useCases/useInitialPokemonList";
+    import PageLoadingStub from "@/components/PageLoadingStub.svelte";
+    import PokemonCardList from "@/components/PokemonCardList.svelte";
+    import { MainPageDomain } from "@/domains/MainPageDomain";
+    import { useInitialPokemonList } from "@/useCases/useInitialPokemonList";
 
     const { metaTitle } = MainPageDomain
 

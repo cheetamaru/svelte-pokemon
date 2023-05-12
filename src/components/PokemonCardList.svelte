@@ -1,14 +1,14 @@
 <script lang="ts">
     import type { NamedAPIResourceList, NamedAPIResource } from "pokenode-ts";
     import debounce from "lodash.debounce"
-    import { pokemonApi } from "../services/api/pokemonApi";
-    import PokemonCard from "../components/PokemonCard.svelte";
-    import VirtualScroll from "../components/VirtualScroll.svelte";
-    import LoadingDots from "./LoadingDots.svelte";
+    import { pokemonApi } from "@/services/api/pokemonApi";
+    import PokemonCard from "@/components/PokemonCard.svelte";
+    import VirtualScroll from "@/components/VirtualScroll.svelte";
+    import LoadingDots from "@/components/LoadingDots.svelte";
 
-    import { MainPageDomain } from "../domains/MainPageDomain";
-    import { PokemonListDomain } from "../domains/PokemonListDomain";
-    import { usePokemonListInputs } from "../useCases/usePokemonListInputs";
+    import { MainPageDomain } from "@/domains/MainPageDomain";
+    import { PokemonListDomain } from "@/domains/PokemonListDomain";
+    import { usePokemonListInputs } from "@/useCases/usePokemonListInputs";
 
     const { mainTitle } = MainPageDomain;
     const { elementHeightSettings, elementsPerRowSettings, getValueInRange } = PokemonListDomain

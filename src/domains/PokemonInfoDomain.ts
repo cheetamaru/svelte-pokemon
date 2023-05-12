@@ -1,5 +1,5 @@
 import type { Pokemon } from "pokenode-ts";
-import { capitalize } from "../utils";
+import { capitalize } from "@/utils";
 
 const notFoundMessage = 'Image not found';
 

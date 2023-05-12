@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Pokemon } from "pokenode-ts";
-    import { PokemonInfoDomain } from "../domains/PokemonInfoDomain";
+    import { PokemonInfoDomain } from "@/domains/PokemonInfoDomain";
 
     export let pokemon: Pokemon
 

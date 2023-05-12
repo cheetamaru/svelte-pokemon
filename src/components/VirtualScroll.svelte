@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
     import { onMount } from 'svelte';
-    import { VirtualScrollDomain } from '../domains/VirtualScrollDomain';
+    import { VirtualScrollDomain } from '@/domains/VirtualScrollDomain';
 
     type T = $$Generic;
 
