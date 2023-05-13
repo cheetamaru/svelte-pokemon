@@ -22,7 +22,6 @@ API: https://pokeapi.co/
 
 - [ ] `PokemonCardList.svelte`
 - [ ] `VirtualScroll.svelte`
-- [ ] tests
 
 
 ## Developing
