@@ -1,17 +1,20 @@
 <script lang="ts">
-    import type { NamedAPIResourceList, NamedAPIResource } from "pokenode-ts";
     import debounce from "lodash.debounce"
+    import type { NamedAPIResourceList, NamedAPIResource } from "pokenode-ts";
     import { pokemonApi } from "@/services/api/pokemonApi";
     import PokemonCard from "@/components/PokemonCard.svelte";
     import VirtualScroll from "@/components/VirtualScroll.svelte";
     import LoadingDots from "@/components/LoadingDots.svelte";
-
     import { MainPageDomain } from "@/domains/MainPageDomain";
     import { PokemonListDomain } from "@/domains/PokemonListDomain";
     import { usePokemonListInputs } from "@/useCases/usePokemonListInputs";
 
     const { mainTitle } = MainPageDomain;
-    const { elementHeightSettings, elementsPerRowSettings, getValueInRange } = PokemonListDomain
+    const {
+        elementHeightSettings,
+        elementsPerRowSettings,
+        getValueInRange
+    } = PokemonListDomain;
 
     const { getPokemonList } = pokemonApi;
 
@@ -86,7 +89,8 @@
     </div>
     <div class="list-header__actions">
         <div>
-            Elements per row: <input
+            Elements per row:
+            <input
                 type="number"
                 min={elementsPerRowSettings.min}
                 max={elementsPerRowSettings.max}
@@ -95,7 +99,8 @@
             >
         </div>
         <div>
-            Element height: <input
+            Element height:
+            <input
                 type="number"
                 min={elementHeightSettings.min}
                 max={elementHeightSettings.max}

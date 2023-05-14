@@ -1,2 +1,2 @@
-export * from "./capitalize"
-export * from "./getEventTargetValue"
+export * from './capitalize'
+export * from './getEventTargetValue'

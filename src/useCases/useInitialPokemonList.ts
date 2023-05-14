@@ -1,18 +1,18 @@
-import { PokemonListDomain } from "@/domains/PokemonListDomain";
-import { pokemonApi } from "@/services/api/pokemonApi";
+import { PokemonListDomain } from '@/domains/PokemonListDomain'
+import { pokemonApi } from '@/services/api/pokemonApi'
 
-const  { initialListSettings }  = PokemonListDomain
+const { initialListSettings } = PokemonListDomain
 
 const { offset, limit } = initialListSettings
 
 export const useInitialPokemonList = () => {
-    const { getPokemonList } = pokemonApi
+  const { getPokemonList } = pokemonApi
 
-    const getInitialList = () => {
-        return getPokemonList(offset, limit)
-    }
+  const getInitialList = async () => {
+    return await getPokemonList(offset, limit)
+  }
 
-    return {
-        getInitialList,
-    }
+  return {
+    getInitialList
+  }
 }

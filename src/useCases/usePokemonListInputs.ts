@@ -1,75 +1,75 @@
-import { PersistentStorageDomain } from "@/domains/PersistentStorageDomain";
-import { PokemonListDomain } from "@/domains/PokemonListDomain";
-import { getEventTargetValue } from "@/utils";
+import { PersistentStorageDomain } from '@/domains/PersistentStorageDomain'
+import { PokemonListDomain } from '@/domains/PokemonListDomain'
+import { getEventTargetValue } from '@/utils'
 
-type GetInitialValueParams = {
-    min: number;
-    max: number;
-    defaultValue: number;
-    numFromStorage?: number
+interface GetInitialValueParams {
+  min: number
+  max: number
+  defaultValue: number
+  numFromStorage?: number
 }
 
 export const usePokemonListInputs = () => {
-    const {
-        elementHeightSettings,
-        elementsPerRowSettings,
-        elementsPerRowStorageKey,
-        elementsHeightStorageKey,
-    } = PokemonListDomain
+  const {
+    elementHeightSettings,
+    elementsPerRowSettings,
+    elementsPerRowStorageKey,
+    elementsHeightStorageKey
+  } = PokemonListDomain
 
-    const { setItem, getItem } = PersistentStorageDomain
+  const { setItem, getItem } = PersistentStorageDomain
 
-    const getInitialValue = ({
-        min,
-        max,
-        defaultValue,
-        numFromStorage
-    }: GetInitialValueParams) => {
-        if (!numFromStorage || numFromStorage < min || numFromStorage > max) {
-            return defaultValue;
-        }
-
-        return numFromStorage
+  const getInitialValue = ({
+    min,
+    max,
+    defaultValue,
+    numFromStorage
+  }: GetInitialValueParams) => {
+    if (numFromStorage === undefined || numFromStorage < min || numFromStorage > max) {
+      return defaultValue
     }
 
-    const getInitialElementPerRow = () => {
-        const { min, max, defaultValue } = elementsPerRowSettings;
+    return numFromStorage
+  }
 
-        const numFromStorage = Number(getItem(elementsPerRowStorageKey))
+  const getInitialElementPerRow = () => {
+    const { min, max, defaultValue } = elementsPerRowSettings
 
-        return getInitialValue({
-            min,
-            max,
-            defaultValue,
-            numFromStorage
-        })
-    }
+    const numFromStorage = Number(getItem(elementsPerRowStorageKey))
 
-    const getInitialElementHeight = () => {
-        const { min, max, defaultValue } = elementHeightSettings;
+    return getInitialValue({
+      min,
+      max,
+      defaultValue,
+      numFromStorage
+    })
+  }
 
-        const numFromStorage = Number(getItem(elementsHeightStorageKey))
+  const getInitialElementHeight = () => {
+    const { min, max, defaultValue } = elementHeightSettings
 
-        return getInitialValue({
-            min,
-            max,
-            defaultValue,
-            numFromStorage
-        })
-    }
+    const numFromStorage = Number(getItem(elementsHeightStorageKey))
 
-    const onElementPerRowInput = (e: Event) => {
-        setItem(elementsPerRowStorageKey, getEventTargetValue(e))
-    }
+    return getInitialValue({
+      min,
+      max,
+      defaultValue,
+      numFromStorage
+    })
+  }
 
-    const onElementHeightInput = (e: Event) => {
-        setItem(elementsHeightStorageKey, getEventTargetValue(e))
-    }
+  const onElementPerRowInput = (e: Event) => {
+    setItem(elementsPerRowStorageKey, getEventTargetValue(e))
+  }
 
-    return {
-        getInitialElementPerRow,
-        getInitialElementHeight,
-        onElementPerRowInput,
-        onElementHeightInput,
-    }
+  const onElementHeightInput = (e: Event) => {
+    setItem(elementsHeightStorageKey, getEventTargetValue(e))
+  }
+
+  return {
+    getInitialElementPerRow,
+    getInitialElementHeight,
+    onElementPerRowInput,
+    onElementHeightInput
+  }
 }
