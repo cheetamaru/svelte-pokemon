@@ -120,10 +120,11 @@
         });
     }
 
-    $: {
-        const arrayToTriggerReactivity = [elementsPerRow, elementHeight]
+    const handleReactiveElementsChange = <T>(..._: T[]) => {
         handleNewElementAppear()
     }
+
+    $: handleReactiveElementsChange(elementsPerRow, elementHeight)
 
     onMount(() => {
         computeDataToAdd()
