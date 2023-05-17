@@ -1,6 +1,6 @@
 <script lang="ts">
-    import PageLoadingStub from "@/components/PageLoadingStub.svelte";
-    import PokemonCardList from "@/components/PokemonCardList.svelte";
+    import PageLoadingStub from "@/components/loading/PageLoadingStub.svelte";
+    import PokemonCardList from "@/components/pokemon/PokemonCardList.svelte";
     import { MainPageDomain } from "@/domains/MainPageDomain";
     import { useInitialPokemonList } from "@/useCases/useInitialPokemonList";
 

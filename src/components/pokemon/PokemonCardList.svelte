@@ -2,9 +2,9 @@
     import debounce from "lodash.debounce"
     import type { NamedAPIResourceList, NamedAPIResource } from "pokenode-ts";
     import { pokemonApi } from "@/services/api/pokemonApi";
-    import PokemonCard from "@/components/PokemonCard.svelte";
-    import VirtualScroll from "@/components/VirtualScroll.svelte";
-    import LoadingDots from "@/components/LoadingDots.svelte";
+    import PokemonCard from "@/components/pokemon/PokemonCard.svelte";
+    import VirtualScroll from "@/components/virtualScroll/VirtualScroll.svelte";
+    import LoadingDots from "@/components/loading/LoadingDots.svelte";
     import { MainPageDomain } from "@/domains/MainPageDomain";
     import { PokemonListDomain } from "@/domains/PokemonListDomain";
     import { usePokemonListInputs } from "@/useCases/usePokemonListInputs";

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import LoadingDots from "@/components/LoadingDots.svelte";
+    import LoadingDots from "@/components/loading/LoadingDots.svelte";
     import { MainPageDomain } from "@/domains/MainPageDomain";
 
     const { mainTitle } = MainPageDomain;
