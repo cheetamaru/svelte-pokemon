@@ -8,6 +8,10 @@
     const { getPokemonByName } = pokemonApi;
 
     let promise = getPokemonByName(name)
+
+    const reloadPokemon = () => {
+        promise = getPokemonByName(name)
+    }
 </script>
 
 <div class="pokemon-card">
@@ -16,7 +20,11 @@
     {:then pokemon}
         <PokemonInfo {pokemon}/>
     {:catch error}
-        Error: {error}
+        <div class="pokemon-cars__error">
+            <div>{name}</div>
+            <div class="pokemon-cars__error-text">Error: {error}</div>
+            <button on:click={reloadPokemon}>Reload</button>
+        </div>
     {/await}
 </div>
 
@@ -29,5 +37,15 @@
         justify-content: center;
         align-items: center;
         height: inherit;
+    }
+
+    .pokemon-cars__error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pokemon-cars__error-text {
+        text-align: center;
     }
 </style>
