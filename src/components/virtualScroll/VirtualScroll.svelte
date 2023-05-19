@@ -12,7 +12,7 @@
 
     const dispatch = createEventDispatcher();
 
-    const { defaultValues, getTotalContentHeight } = VirtualScrollDomain
+    const { defaultValues, getTotalContentHeight, getVisibleElementsLength } = VirtualScrollDomain
 
     export let elementCount: number = defaultValues.elementCount
     export let elementHeight: number = defaultValues.elementHeight
@@ -31,7 +31,10 @@
     let scrollTop = 0
     let maxScrollTop = scrollTop
 
-    $: lastInRowRenderedElementIndex = Math.max(0, Math.floor(scrollTop / elementHeight) - Math.ceil(renderAhreadElementRowCount / elementsPerRow)) * elementsPerRow;
+    $: lastInRowRenderedElementIndex = Math.max(
+        0,
+        Math.floor(scrollTop / elementHeight) - Math.ceil(renderAhreadElementRowCount / elementsPerRow)
+    ) * elementsPerRow;
 
     $: visibleNodeCount = Math.min(
         elementCount - (lastInRowRenderedElementIndex || 0),
@@ -39,10 +42,6 @@
     );
 
     $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
-
-    const getVisibleElementsLength = (visibleNodeCount: number) => {
-        return visibleNodeCount < 0 ? 0 : visibleNodeCount
-    }
 
     let visibleElements: VisibleElement[]
     $: visibleElements = Array(getVisibleElementsLength(visibleNodeCount))

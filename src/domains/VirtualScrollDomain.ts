@@ -20,7 +20,12 @@ const getTotalContentHeight = ({
   return Math.ceil(elementCount / elementsPerRow) * elementHeight
 }
 
+const getVisibleElementsLength = (visibleNodeCount: number) => {
+  return visibleNodeCount < 0 ? 0 : visibleNodeCount
+}
+
 export const VirtualScrollDomain = {
   defaultValues,
-  getTotalContentHeight
+  getTotalContentHeight,
+  getVisibleElementsLength
 }
