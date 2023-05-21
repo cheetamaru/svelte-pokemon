@@ -31,10 +31,15 @@
     let scrollTop = 0
     let maxScrollTop = scrollTop
 
-    $: lastInRowRenderedElementIndex = Math.max(
+    $: currentRenderedRows = Math.floor(scrollTop / elementHeight)
+    $: rowsToRenderAhead = Math.ceil(renderAhreadElementRowCount / elementsPerRow)
+
+    $: firstInRowRenderedElementIndex = Math.max(
         0,
-        Math.floor(scrollTop / elementHeight) - Math.ceil(renderAhreadElementRowCount / elementsPerRow)
-    ) * elementsPerRow;
+        currentRenderedRows - rowsToRenderAhead
+    )
+
+    $: lastInRowRenderedElementIndex = firstInRowRenderedElementIndex * elementsPerRow;
 
     $: visibleNodeCount = Math.min(
         elementCount - (lastInRowRenderedElementIndex || 0),
