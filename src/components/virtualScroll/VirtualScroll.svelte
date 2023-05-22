@@ -41,9 +41,15 @@
 
     $: lastInRowRenderedElementIndex = firstInRowRenderedElementIndex * elementsPerRow;
 
+    $: canBeRenderedRows = Math.ceil(containerHeight / elementHeight)
+    $: canBeRenderedElements = Math.ceil(canBeRenderedRows * elementsPerRow)
+    $: tresholdElementsToRender = elementsPerRow * (renderAhreadElementRowCount + 1)
+
+    $: elementCountIfAllElementsDontFitContainer = elementCount - (lastInRowRenderedElementIndex || 0)
+
     $: visibleNodeCount = Math.min(
-        elementCount - (lastInRowRenderedElementIndex || 0),
-        Math.ceil(Math.ceil(containerHeight / elementHeight) * elementsPerRow) + elementsPerRow * (renderAhreadElementRowCount + 1)
+        elementCountIfAllElementsDontFitContainer,
+        canBeRenderedElements + tresholdElementsToRender
     );
 
     $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
