@@ -57,12 +57,12 @@
     let visibleElements: VisibleElement[]
     $: visibleElements = Array(getVisibleElementsLength(visibleNodeCount))
         .fill(null)
-        .map((_, index) => {
-            const actualIndex = index + lastInRowRenderedElementIndex
+        .map((_, ind) => {
+            const index = ind + lastInRowRenderedElementIndex
 
             return {
-                el: data[actualIndex],
-                index: actualIndex,
+                el: data[index],
+                index,
             }
         })
 
