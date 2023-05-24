@@ -66,6 +66,12 @@
             }
         })
 
+    const getElementsToAddCountPastMaxLength = (elementCount: number, dataLength: number) => {
+        const diff = elementCount - dataLength
+
+        return diff > 0 ? diff : 0
+    }
+
     const computeDataToAdd = (newRows: number = 0) => {
         let elementsToAddCount = newRows * elementsPerRow
         const dataLength = data.length
@@ -75,8 +81,7 @@
         }
 
         if (dataLength + elementsToAddCount > elementCount) {
-            const diff = elementCount - dataLength
-            elementsToAddCount = diff > 0 ? diff : 0
+            elementsToAddCount = getElementsToAddCountPastMaxLength(elementCount, dataLength)
         }
 
         return dispatch('endReached', elementsToAddCount) 
