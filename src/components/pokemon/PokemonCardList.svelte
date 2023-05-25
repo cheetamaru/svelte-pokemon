@@ -88,7 +88,7 @@
         {mainTitle}
     </div>
     <div class="list-header__actions">
-        <div>
+        <div class="list-header__item">
             Elements per row:
             <input
                 type="number"
@@ -98,7 +98,7 @@
                 on:input={onElementPerRowInput}
             >
         </div>
-        <div>
+        <div class="list-header__item">
             Element height:
             <input
                 type="number"
@@ -145,8 +145,13 @@
 
 .list-header__actions {
     display: flex;
-    column-gap: 15px;
+    column-gap: 7px;
 }
+
+.list-header__item:not(:last-child) { 
+    padding-right: 7px;
+    border-right: 1px solid black;
+ }
 
 .pokemon-card-list {
     display: flex;
