@@ -12,7 +12,12 @@
 
     const dispatch = createEventDispatcher();
 
-    const { defaultValues, getTotalContentHeight, getVisibleElementsLength } = VirtualScrollDomain
+    const {
+        defaultValues,
+        getTotalContentHeight,
+        getVisibleElementsLength,
+        getElementsToAddCountPastMaxLength,
+    } = VirtualScrollDomain
 
     export let elementCount: number = defaultValues.elementCount
     export let elementHeight: number = defaultValues.elementHeight
@@ -65,12 +70,6 @@
                 index,
             }
         })
-
-    const getElementsToAddCountPastMaxLength = (elementCount: number, dataLength: number) => {
-        const diff = elementCount - dataLength
-
-        return diff > 0 ? diff : 0
-    }
 
     const computeDataToAdd = (newRows: number = 0) => {
         let elementsToAddCount = newRows * elementsPerRow
