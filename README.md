@@ -15,6 +15,8 @@ API: https://pokeapi.co/
 - [x] API layer (sort of)
 - [x] Item layout and design
 - [x] Virtual Scrolling
+- [ ] Gif demonstration
+- [ ] Detailed description of what I've done
 - [ ] Refactor
 - [ ] Deployment
 
