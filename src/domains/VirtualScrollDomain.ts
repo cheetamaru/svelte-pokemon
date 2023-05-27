@@ -12,6 +12,13 @@ interface GetTotalContentHeightParams {
   elementHeight: number
 }
 
+interface GetLastInRowRenderedElementIndexParams {
+  scrollTop: number
+  elementHeight: number
+  renderAhreadElementRowCount: number
+  elementsPerRow: number
+}
+
 const getTotalContentHeight = ({
   elementCount,
   elementsPerRow,
@@ -30,9 +37,26 @@ const getElementsToAddCountPastMaxLength = (elementCount: number, dataLength: nu
   return diff > 0 ? diff : 0
 }
 
+const getLastInRowRenderedElementIndex = ({
+  scrollTop,
+  elementHeight,
+  renderAhreadElementRowCount,
+  elementsPerRow
+}: GetLastInRowRenderedElementIndexParams): number => {
+  const currentRenderedRows = Math.floor(scrollTop / elementHeight)
+  const rowsToRenderAhead = Math.ceil(renderAhreadElementRowCount / elementsPerRow)
+
+  const firstInRowRenderedElementIndex = Math.max(
+    0,
+    currentRenderedRows - rowsToRenderAhead
+  )
+  return firstInRowRenderedElementIndex * elementsPerRow
+}
+
 export const VirtualScrollDomain = {
   defaultValues,
   getTotalContentHeight,
   getVisibleElementsLength,
-  getElementsToAddCountPastMaxLength
+  getElementsToAddCountPastMaxLength,
+  getLastInRowRenderedElementIndex
 }

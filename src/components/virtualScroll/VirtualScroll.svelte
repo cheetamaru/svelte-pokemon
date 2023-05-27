@@ -17,6 +17,7 @@
         getTotalContentHeight,
         getVisibleElementsLength,
         getElementsToAddCountPastMaxLength,
+        getLastInRowRenderedElementIndex,
     } = VirtualScrollDomain
 
     export let elementCount: number = defaultValues.elementCount
@@ -36,15 +37,12 @@
     let scrollTop = 0
     let maxScrollTop = scrollTop
 
-    $: currentRenderedRows = Math.floor(scrollTop / elementHeight)
-    $: rowsToRenderAhead = Math.ceil(renderAhreadElementRowCount / elementsPerRow)
-
-    $: firstInRowRenderedElementIndex = Math.max(
-        0,
-        currentRenderedRows - rowsToRenderAhead
-    )
-
-    $: lastInRowRenderedElementIndex = firstInRowRenderedElementIndex * elementsPerRow;
+    $: lastInRowRenderedElementIndex = getLastInRowRenderedElementIndex({
+        scrollTop,
+        elementHeight,
+        renderAhreadElementRowCount,
+        elementsPerRow
+    })
 
     $: canBeRenderedRows = Math.ceil(containerHeight / elementHeight)
     $: canBeRenderedElements = Math.ceil(canBeRenderedRows * elementsPerRow)
