@@ -18,6 +18,7 @@
         getVisibleElementsLength,
         getElementsToAddCountPastMaxLength,
         getLastInRowRenderedElementIndex,
+        getVisibleNodeCount,
     } = VirtualScrollDomain
 
     export let elementCount: number = defaultValues.elementCount
@@ -44,16 +45,14 @@
         elementsPerRow
     })
 
-    $: canBeRenderedRows = Math.ceil(containerHeight / elementHeight)
-    $: canBeRenderedElements = Math.ceil(canBeRenderedRows * elementsPerRow)
-    $: tresholdElementsToRender = elementsPerRow * (renderAhreadElementRowCount + 1)
-
-    $: elementCountIfAllElementsDontFitContainer = elementCount - (lastInRowRenderedElementIndex || 0)
-
-    $: visibleNodeCount = Math.min(
-        elementCountIfAllElementsDontFitContainer,
-        canBeRenderedElements + tresholdElementsToRender
-    );
+    $: visibleNodeCount = getVisibleNodeCount({
+        containerHeight,
+        elementHeight,
+        elementsPerRow,
+        renderAhreadElementRowCount,
+        elementCount,
+        lastInRowRenderedElementIndex,
+    });
 
     $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
 

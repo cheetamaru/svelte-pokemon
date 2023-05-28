@@ -19,6 +19,15 @@ interface GetLastInRowRenderedElementIndexParams {
   elementsPerRow: number
 }
 
+interface GetVisibleNodeCountParams {
+  containerHeight: number
+  elementHeight: number
+  elementsPerRow: number
+  renderAhreadElementRowCount: number
+  elementCount: number
+  lastInRowRenderedElementIndex: number | undefined
+}
+
 const getTotalContentHeight = ({
   elementCount,
   elementsPerRow,
@@ -53,10 +62,31 @@ const getLastInRowRenderedElementIndex = ({
   return firstInRowRenderedElementIndex * elementsPerRow
 }
 
+const getVisibleNodeCount = ({
+  containerHeight,
+  elementHeight,
+  elementsPerRow,
+  renderAhreadElementRowCount,
+  elementCount,
+  lastInRowRenderedElementIndex
+}: GetVisibleNodeCountParams): number => {
+  const canBeRenderedRows = Math.ceil(containerHeight / elementHeight)
+  const canBeRenderedElements = Math.ceil(canBeRenderedRows * elementsPerRow)
+  const tresholdElementsToRender = elementsPerRow * (renderAhreadElementRowCount + 1)
+
+  const elementCountIfAllElementsDontFitContainer = elementCount - (lastInRowRenderedElementIndex ?? 0)
+
+  return Math.min(
+    elementCountIfAllElementsDontFitContainer,
+    canBeRenderedElements + tresholdElementsToRender
+  )
+}
+
 export const VirtualScrollDomain = {
   defaultValues,
   getTotalContentHeight,
   getVisibleElementsLength,
   getElementsToAddCountPastMaxLength,
-  getLastInRowRenderedElementIndex
+  getLastInRowRenderedElementIndex,
+  getVisibleNodeCount
 }
