@@ -15,7 +15,7 @@
     const {
         defaultValues,
         getTotalContentHeight,
-        getVisibleElementsLength,
+        getVisibleElements,
         getElementsToAddCountPastMaxLength,
         getLastInRowRenderedElementIndex,
         getVisibleNodeCount,
@@ -55,18 +55,14 @@
     });
 
     $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
+    $: elementWidthInPercent = 100 / elementsPerRow
 
     let visibleElements: VisibleElement[]
-    $: visibleElements = Array(getVisibleElementsLength(visibleNodeCount))
-        .fill(null)
-        .map((_, ind) => {
-            const index = ind + lastInRowRenderedElementIndex
-
-            return {
-                el: data[index],
-                index,
-            }
-        })
+    $: visibleElements = getVisibleElements({
+        visibleNodeCount,
+        lastInRowRenderedElementIndex,
+        data
+    })
 
     const computeDataToAdd = (newRows: number = 0) => {
         let elementsToAddCount = newRows * elementsPerRow
@@ -140,8 +136,6 @@
     onMount(() => {
         computeDataToAdd()
     })
-
-    $: elementWidthInPercent = 100 / elementsPerRow
 </script>
 
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">

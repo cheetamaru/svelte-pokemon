@@ -82,11 +82,35 @@ const getVisibleNodeCount = ({
   )
 }
 
+// TODO: add return type
+
+const getVisibleElements = <T>({
+  visibleNodeCount,
+  lastInRowRenderedElementIndex,
+  data
+}: {
+  visibleNodeCount: number | undefined
+  lastInRowRenderedElementIndex: number | undefined
+  data: T[]
+}) => {
+  return Array(getVisibleElementsLength(visibleNodeCount ?? 0))
+    .fill(null)
+    .map((_, ind) => {
+      const index = ind + (lastInRowRenderedElementIndex ?? 0)
+
+      return {
+        el: data[index],
+        index
+      }
+    })
+}
+
 export const VirtualScrollDomain = {
   defaultValues,
   getTotalContentHeight,
   getVisibleElementsLength,
   getElementsToAddCountPastMaxLength,
   getLastInRowRenderedElementIndex,
-  getVisibleNodeCount
+  getVisibleNodeCount,
+  getVisibleElements
 }
