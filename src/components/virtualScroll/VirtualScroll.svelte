@@ -5,11 +5,6 @@
 
     type T = $$Generic;
 
-    type VisibleElement = {
-        el: T;
-        index: number;
-    }
-
     const dispatch = createEventDispatcher();
 
     const {
@@ -57,7 +52,6 @@
     $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
     $: elementWidthInPercent = 100 / elementsPerRow
 
-    let visibleElements: VisibleElement[]
     $: visibleElements = getVisibleElements({
         visibleNodeCount,
         lastInRowRenderedElementIndex,

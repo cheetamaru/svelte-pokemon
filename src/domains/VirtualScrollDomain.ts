@@ -1,3 +1,5 @@
+import type { VisibleElement } from '@/types'
+
 const defaultValues = {
   elementCount: 100,
   elementHeight: 150,
@@ -26,6 +28,12 @@ interface GetVisibleNodeCountParams {
   renderAhreadElementRowCount: number
   elementCount: number
   lastInRowRenderedElementIndex: number | undefined
+}
+
+interface GetVisibleElementsParams<T> {
+  visibleNodeCount: number | undefined
+  lastInRowRenderedElementIndex: number | undefined
+  data: T[]
 }
 
 const getTotalContentHeight = ({
@@ -82,17 +90,11 @@ const getVisibleNodeCount = ({
   )
 }
 
-// TODO: add return type
-
 const getVisibleElements = <T>({
   visibleNodeCount,
   lastInRowRenderedElementIndex,
   data
-}: {
-  visibleNodeCount: number | undefined
-  lastInRowRenderedElementIndex: number | undefined
-  data: T[]
-}) => {
+}: GetVisibleElementsParams<T>): Array<VisibleElement<T>> => {
   return Array(getVisibleElementsLength(visibleNodeCount ?? 0))
     .fill(null)
     .map((_, ind) => {
