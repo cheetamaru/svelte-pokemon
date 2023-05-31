@@ -11,7 +11,7 @@
         defaultValues,
         getTotalContentHeight,
         getVisibleElements,
-        getElementsToAddCountPastMaxLength,
+        getElementsToAddCount,
         getLastInRowRenderedElementIndex,
         getVisibleNodeCount,
     } = VirtualScrollDomain
@@ -59,16 +59,15 @@
     })
 
     const computeDataToAdd = (newRows: number = 0) => {
-        let elementsToAddCount = newRows * elementsPerRow
         const dataLength = data.length
 
-        if (dataLength + elementsToAddCount < visibleNodeCount) {
-            elementsToAddCount += visibleNodeCount
-        }
-
-        if (dataLength + elementsToAddCount > elementCount) {
-            elementsToAddCount = getElementsToAddCountPastMaxLength(elementCount, dataLength)
-        }
+        const elementsToAddCount = getElementsToAddCount({
+            newRows,
+            elementsPerRow,
+            dataLength,
+            visibleNodeCount,
+            elementCount
+        })
 
         return dispatch('endReached', elementsToAddCount) 
     }

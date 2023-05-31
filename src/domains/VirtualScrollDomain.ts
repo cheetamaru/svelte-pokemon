@@ -36,6 +36,14 @@ interface GetVisibleElementsParams<T> {
   data: T[]
 }
 
+interface GetElementsToAddCountParams {
+  newRows: number
+  elementsPerRow: number
+  dataLength: number
+  visibleNodeCount: number
+  elementCount: number
+}
+
 const getTotalContentHeight = ({
   elementCount,
   elementsPerRow,
@@ -107,12 +115,32 @@ const getVisibleElements = <T>({
     })
 }
 
+const getElementsToAddCount = ({
+  newRows,
+  elementsPerRow,
+  dataLength,
+  visibleNodeCount,
+  elementCount
+}: GetElementsToAddCountParams): number => {
+  let elementsToAddCount = newRows * elementsPerRow
+
+  if (dataLength + elementsToAddCount < visibleNodeCount) {
+    elementsToAddCount += visibleNodeCount
+  }
+
+  if (dataLength + elementsToAddCount > elementCount) {
+    elementsToAddCount = getElementsToAddCountPastMaxLength(elementCount, dataLength)
+  }
+
+  return elementsToAddCount
+}
+
 export const VirtualScrollDomain = {
   defaultValues,
   getTotalContentHeight,
   getVisibleElementsLength,
-  getElementsToAddCountPastMaxLength,
   getLastInRowRenderedElementIndex,
   getVisibleNodeCount,
-  getVisibleElements
+  getVisibleElements,
+  getElementsToAddCount
 }
