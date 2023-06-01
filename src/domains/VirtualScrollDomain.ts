@@ -44,6 +44,12 @@ interface GetElementsToAddCountParams {
   elementCount: number
 }
 
+interface GetOffsetYParams {
+  lastInRowRenderedElementIndex: number
+  elementHeight: number
+  elementsPerRow: number
+}
+
 const getTotalContentHeight = ({
   elementCount,
   elementsPerRow,
@@ -135,6 +141,14 @@ const getElementsToAddCount = ({
   return elementsToAddCount
 }
 
+const getOffsetY = ({
+  lastInRowRenderedElementIndex,
+  elementHeight,
+  elementsPerRow
+}: GetOffsetYParams): number => {
+  return lastInRowRenderedElementIndex * elementHeight / elementsPerRow
+}
+
 export const VirtualScrollDomain = {
   defaultValues,
   getTotalContentHeight,
@@ -142,5 +156,6 @@ export const VirtualScrollDomain = {
   getLastInRowRenderedElementIndex,
   getVisibleNodeCount,
   getVisibleElements,
-  getElementsToAddCount
+  getElementsToAddCount,
+  getOffsetY
 }

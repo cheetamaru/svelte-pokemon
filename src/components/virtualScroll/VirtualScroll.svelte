@@ -14,6 +14,7 @@
         getElementsToAddCount,
         getLastInRowRenderedElementIndex,
         getVisibleNodeCount,
+        getOffsetY
     } = VirtualScrollDomain
 
     export let elementCount: number = defaultValues.elementCount
@@ -49,7 +50,9 @@
         lastInRowRenderedElementIndex,
     });
 
-    $: offsetY = lastInRowRenderedElementIndex * elementHeight / elementsPerRow
+    $: offsetY = getOffsetY({lastInRowRenderedElementIndex,
+        elementHeight,
+        elementsPerRow})
     $: elementWidthInPercent = 100 / elementsPerRow
 
     $: visibleElements = getVisibleElements({
