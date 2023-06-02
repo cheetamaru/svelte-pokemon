@@ -53,6 +53,7 @@
     $: offsetY = getOffsetY({lastInRowRenderedElementIndex,
         elementHeight,
         elementsPerRow})
+
     $: elementWidthInPercent = 100 / elementsPerRow
 
     $: visibleElements = getVisibleElements({
@@ -79,6 +80,11 @@
     let lastRenderedCount = -1
     const tresholdLastRenderCount = 100
 
+    const resetLastCounts = () => {
+        lastNeedToRenderCount = -1
+        lastRenderedCount = -1
+    }
+
     const handleNewElementAppear = () => {
         const bufferHeight = elementHeight * renderAhreadElementRowCount
 
@@ -88,8 +94,7 @@
         const renderedRowsCount = Math.floor(data.length / elementsPerRow)
 
         if (renderedRowsCount < lastRenderedCount + tresholdLastRenderCount) {
-            lastNeedToRenderCount = -1
-            lastRenderedCount = -1
+            resetLastCounts()
         }
 
         if (needToRenderRowsCount > renderedRowsCount && needToRenderRowsCount !== lastNeedToRenderCount) {
@@ -129,9 +134,7 @@
 
     $: handleReactiveElementsChange(elementsPerRow, elementHeight)
 
-    onMount(() => {
-        computeDataToAdd()
-    })
+    onMount(() => computeDataToAdd())
 </script>
 
 <div class="virtual-scroll__container" style="height: {containerHeight}px" on:scroll="{onScroll}">
