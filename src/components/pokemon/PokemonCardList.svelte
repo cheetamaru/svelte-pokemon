@@ -55,13 +55,13 @@
 
     const debouncedHandleEnd = debounce(handleEndReached, 100)
 
-    let elementsPerRow = getInitialElementPerRow()
-    let elementHeight = getInitialElementHeight()
-
     let box: HTMLElement
 
     $: offsetTopOfScrollContainer = box?.offsetTop || 0
     $: containerHeight = window.innerHeight - offsetTopOfScrollContainer
+
+    let elementsPerRow = getInitialElementPerRow()
+    let elementHeight = getInitialElementHeight()
 
     const checkElementsPerRow = (val: number) => {
         const {min, max} = elementsPerRowSettings
