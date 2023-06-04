@@ -1,6 +1,8 @@
 # Svelte Virtual Scrolling Pet Project
 
-Pokemon list with virtual scrolling
+Pokemon list with virtual scrolling (no matter how down you scrolled, only a few items will be rendered)
+
+![demonstration](/demonstration.jpg)
 
 API: https://pokeapi.co/
 
