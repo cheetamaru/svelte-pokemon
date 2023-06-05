@@ -1,6 +1,6 @@
 # Svelte Virtual Scrolling Pet Project
 
-Pokemon list with virtual scrolling (no matter how down you scrolled, only a few items will be rendered)
+Pokemon list with virtual scrolling (no matter how much you've scrolled, only a necessary amount of items will be rendered)
 
 ![demonstration](/demonstration.jpg)
 
@@ -8,7 +8,7 @@ API: https://pokeapi.co/
 
 ## Goals:
 
-1. Show my frontend skills by creating a project using the framework I don't use
+1. Show my frontend skills by creating a project on the framework I don't normally use
 2. Implement virtual scrolling, examine different approaches of creating it
 3. Have fun
 
@@ -26,7 +26,6 @@ API: https://pokeapi.co/
 
 - [ ] `PokemonCardList.svelte`
 - [ ] `VirtualScroll.svelte`
-
 
 ## Developing
 
