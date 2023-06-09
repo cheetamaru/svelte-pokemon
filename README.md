@@ -9,7 +9,7 @@ API: https://pokeapi.co/
 ## Goals:
 
 1. Show my frontend skills by creating a project on the framework I don't normally use
-2. Implement virtual scrolling, examine different approaches of creating it
+2. Implement virtual scrolling
 3. Have fun
 
 ## TODO List:
@@ -17,15 +17,8 @@ API: https://pokeapi.co/
 - [x] API layer (sort of)
 - [x] Item layout and design
 - [x] Virtual Scrolling
-- [ ] Gif demonstration
-- [ ] Detailed description of what I've done
-- [ ] Refactor
+- [x] Refactor
 - [ ] Deployment
-
-## To Refactor:
-
-- [ ] `PokemonCardList.svelte`
-- [ ] `VirtualScroll.svelte`
 
 ## Developing
 
